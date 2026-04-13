@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Meal Plans — Fit With Abhi</title>
+  <meta name="description" content="Abhijit's curated meal plans for aesthetics — non-vegetarian (2750 kcal, 150g protein) and vegetarian (2600 kcal, 120g protein) options.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav-top" id="navTop"></nav>
+  <nav class="nav-bottom" id="navBottom"></nav>
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+  <button class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <section class="page-header">
+    <div class="page-header-bg" style="background: var(--pastel-peach);"></div>
+    <span class="badge badge-accent reveal">🍽️ ABHI'S PLAN FOR AESTHETICS 📈</span>
+    <h1 class="reveal reveal-delay-1">MEAL<br><span class="text-gradient">PLANS</span></h1>
+    <p class="reveal reveal-delay-2">Abhijit's exact meal plans — tried, tested, and proven for aesthetics.</p>
+  </section>
+
+  <!-- How To Use -->
+  <section class="section">
+    <div class="container" style="max-width: 600px;">
+      <div class="how-to-section reveal">
+        <h3>📖 How to Use</h3>
+        <div class="how-to-steps">
+          <div class="how-to-step">
+            <div class="how-to-step-num">1</div>
+            <div class="how-to-step-content">
+              <h4>Pick Your Diet</h4>
+              <p>Toggle between Non-Veg and Veg meal plans. Both are Abhi's actual meals.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">2</div>
+            <div class="how-to-step-content">
+              <h4>Check the Macros</h4>
+              <p>Each meal shows exact portions and calorie/macro breakdowns (protein, carbs, fats).</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">3</div>
+            <div class="how-to-step-content">
+              <h4>Adjust for You</h4>
+              <p>Use the Calorie Calculator to find your TDEE, then scale these portions up or down accordingly.</p>
+            </div>
+          </div>
+        </div>
+        <div class="how-to-preview">
+          <p class="how-to-preview-label font-accent">Meal cards with macros</p>
+          <svg viewBox="0 0 260 70" fill="none">
+            <rect x="5" y="5" width="120" height="60" rx="12" fill="#FEF08A" stroke="#1A1A1A" stroke-width="2"/>
+            <circle cx="25" cy="25" r="10" fill="#1A1A1A"/>
+            <text x="25" y="28" text-anchor="middle" font-size="8" font-weight="900" fill="#FFF">1</text>
+            <text x="42" y="22" font-size="7" font-weight="800" fill="#1A1A1A">Breakfast</text>
+            <text x="42" y="32" font-size="5" fill="#6B6B6B">7:00 AM</text>
+            <text x="12" y="48" font-size="5" fill="#1A1A1A">4 eggs + 60g oats + milk</text>
+            <rect x="12" y="52" width="22" height="8" rx="3" fill="rgba(255,255,255,0.6)" stroke="#1A1A1A" stroke-width="0.5"/>
+            <text x="23" y="58" text-anchor="middle" font-size="4" font-weight="800" fill="#1A1A1A">550cal</text>
+            <rect x="38" y="52" width="18" height="8" rx="3" fill="rgba(255,255,255,0.6)" stroke="#1A1A1A" stroke-width="0.5"/>
+            <text x="47" y="58" text-anchor="middle" font-size="4" font-weight="800" fill="#FF6B6B">38gP</text>
+            <rect x="140" y="5" width="115" height="60" rx="12" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="2"/>
+            <circle cx="160" cy="25" r="10" fill="#1A1A1A"/>
+            <text x="160" y="28" text-anchor="middle" font-size="8" font-weight="900" fill="#FFF">2</text>
+            <text x="177" y="22" font-size="7" font-weight="800" fill="#1A1A1A">Lunch</text>
+            <text x="177" y="32" font-size="5" fill="#6B6B6B">1:00 PM</text>
+            <text x="147" y="48" font-size="5" fill="#1A1A1A">300g rice + 150g chicken</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 600px;">
+
+      <!-- Plan Toggle -->
+      <div class="toggle-pills reveal" style="max-width: 350px; margin: 0 auto var(--space-xl);">
+        <div class="toggle-pill active" onclick="MealPlan.setType('nonveg')">🍗 Non-Veg</div>
+        <div class="toggle-pill" onclick="MealPlan.setType('veg')">🌱 Vegetarian</div>
+      </div>
+
+      <!-- NON-VEG PLAN -->
+      <div id="nonvegPlan">
+        <!-- Daily Total Card -->
+        <div class="transform-card reveal" style="margin-bottom: var(--space-xl);">
+          <div class="transform-content">
+            <p class="font-accent" style="font-size: 1.2rem;">daily total</p>
+            <div style="font-family: var(--font-heading); font-weight: 900; font-size: clamp(2rem, 8vw, 3rem); line-height: 1;">2650–2750</div>
+            <p class="transform-label" style="margin-top: var(--space-sm);">kcal per day</p>
+            <div class="meal-macros" style="margin-top: var(--space-lg); max-width: 350px; margin-left: auto; margin-right: auto;">
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);">
+                <div class="macro-chip-value">150g</div>
+                <div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Protein</div>
+              </div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);">
+                <div class="macro-chip-value">~300g</div>
+                <div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Carbs</div>
+              </div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);">
+                <div class="macro-chip-value">~70g</div>
+                <div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Fats</div>
+              </div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);">
+                <div class="macro-chip-value">4</div>
+                <div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Meals</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meal 1: Breakfast -->
+        <div class="meal-card reveal">
+          <div class="meal-card-header">
+            <div class="meal-number">1</div>
+            <div>
+              <div class="meal-title">🥣 Breakfast</div>
+              <div class="meal-time">Morning · ~620 kcal</div>
+            </div>
+          </div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Oats</span><span class="meal-item-qty">60g</span></div>
+            <div class="meal-item"><span class="meal-item-name">Low fat milk</span><span class="meal-item-qty">150ml</span></div>
+            <div class="meal-item"><span class="meal-item-name">Whole Eggs</span><span class="meal-item-qty">4 nos</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">620</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">35g</div><div class="macro-chip-label" style="color:#FF6B6B">Protein</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">55g</div><div class="macro-chip-label" style="color:#4facfe">Carbs</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">25g</div><div class="macro-chip-label" style="color:#FFE66D">Fats</div></div>
+          </div>
+        </div>
+
+        <!-- Meal 2: Lunch -->
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header">
+            <div class="meal-number">2</div>
+            <div>
+              <div class="meal-title">🍚 Lunch</div>
+              <div class="meal-time">Afternoon · ~760 kcal</div>
+            </div>
+          </div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Cooked Rice</span><span class="meal-item-qty">300g (2½ bowls)</span></div>
+            <div class="meal-item"><span class="meal-item-name">Chicken breast / Fish</span><span class="meal-item-qty">150g / 200g raw</span></div>
+            <div class="meal-item"><span class="meal-item-name">Mixed vegetables</span><span class="meal-item-qty">1 bowl</span></div>
+            <div class="meal-item"><span class="meal-item-name">Salad</span><span class="meal-item-qty">1 bowl</span></div>
+            <div class="meal-item"><span class="meal-item-name">Ghee</span><span class="meal-item-qty">1 tsp (5g)</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">760</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">40g</div><div class="macro-chip-label" style="color:#FF6B6B">Protein</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">85g</div><div class="macro-chip-label" style="color:#4facfe">Carbs</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">10g</div><div class="macro-chip-label" style="color:#FFE66D">Fats</div></div>
+          </div>
+        </div>
+
+        <!-- Meal 3: Evening -->
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header">
+            <div class="meal-number">3</div>
+            <div>
+              <div class="meal-title">🍞 Evening Meal</div>
+              <div class="meal-time">Evening · ~700 kcal</div>
+            </div>
+          </div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Roti</span><span class="meal-item-qty">3 medium</span></div>
+            <div class="meal-item"><span class="meal-item-name">Whole Eggs</span><span class="meal-item-qty">3 nos</span></div>
+            <div class="meal-item"><span class="meal-item-name">Curd</span><span class="meal-item-qty">100g</span></div>
+            <div class="meal-item"><span class="meal-item-name">Ghee</span><span class="meal-item-qty">1 tsp</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">700</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">32g</div><div class="macro-chip-label" style="color:#FF6B6B">Protein</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">65g</div><div class="macro-chip-label" style="color:#4facfe">Carbs</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">20g</div><div class="macro-chip-label" style="color:#FFE66D">Fats</div></div>
+          </div>
+        </div>
+
+        <!-- Meal 4: Dinner -->
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header">
+            <div class="meal-number">4</div>
+            <div>
+              <div class="meal-title">🍛 Dinner</div>
+              <div class="meal-time">Night · ~700 kcal</div>
+            </div>
+          </div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Cooked Rice</span><span class="meal-item-qty">250g (2 bowls)</span></div>
+            <div class="meal-item"><span class="meal-item-name">Fish / Chicken breast</span><span class="meal-item-qty">200g / 150g raw</span></div>
+            <div class="meal-item"><span class="meal-item-name">Ghee</span><span class="meal-item-qty">1 tsp</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">700</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">40g</div><div class="macro-chip-label" style="color:#FF6B6B">Protein</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">70g</div><div class="macro-chip-label" style="color:#4facfe">Carbs</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">12g</div><div class="macro-chip-label" style="color:#FFE66D">Fats</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VEG PLAN -->
+      <div id="vegPlan" style="display: none;">
+        <div class="transform-card reveal" style="margin-bottom: var(--space-xl); background: linear-gradient(135deg, #AAFF00, #00CC88);">
+          <div class="transform-content">
+            <p class="font-accent" style="font-size: 1.2rem;">daily total (veg)</p>
+            <div style="font-family: var(--font-heading); font-weight: 900; font-size: clamp(2rem, 8vw, 3rem); line-height: 1;">2500–2650</div>
+            <p class="transform-label" style="margin-top: var(--space-sm);">kcal per day</p>
+            <div class="meal-macros" style="margin-top: var(--space-lg); max-width: 350px; margin-left: auto; margin-right: auto;">
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);"><div class="macro-chip-value">120g</div><div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Protein</div></div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);"><div class="macro-chip-value">~290g</div><div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Carbs</div></div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);"><div class="macro-chip-value">~80g</div><div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Fats</div></div>
+              <div class="macro-chip" style="background: rgba(0,0,0,0.2);"><div class="macro-chip-value">4</div><div class="macro-chip-label" style="color: rgba(0,0,0,0.6);">Meals</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="meal-card reveal">
+          <div class="meal-card-header"><div class="meal-number" style="background:#00CC88;">1</div><div><div class="meal-title">🥣 Meal 1</div><div class="meal-time">~750 kcal</div></div></div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Oats</span><span class="meal-item-qty">100g</span></div>
+            <div class="meal-item"><span class="meal-item-name">Milk</span><span class="meal-item-qty">500ml</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">750</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">32g</div><div class="macro-chip-label" style="color:#FF6B6B">P</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">95g</div><div class="macro-chip-label" style="color:#4facfe">C</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">20g</div><div class="macro-chip-label" style="color:#FFE66D">F</div></div>
+          </div>
+        </div>
+
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header"><div class="meal-number" style="background:#00CC88;">2</div><div><div class="meal-title">🫓 Meal 2</div><div class="meal-time">~650 kcal</div></div></div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Besan Chilla</span><span class="meal-item-qty">100g</span></div>
+            <div class="meal-item"><span class="meal-item-name">Curd</span><span class="meal-item-qty">200g</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">650</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">32g</div><div class="macro-chip-label" style="color:#FF6B6B">P</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">60g</div><div class="macro-chip-label" style="color:#4facfe">C</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">20g</div><div class="macro-chip-label" style="color:#FFE66D">F</div></div>
+          </div>
+        </div>
+
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header"><div class="meal-number" style="background:#00CC88;">3</div><div><div class="meal-title">🍌 Pre-Workout</div><div class="meal-time">~210 kcal</div></div></div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Banana</span><span class="meal-item-qty">2 medium</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">210</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">2g</div><div class="macro-chip-label" style="color:#FF6B6B">P</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">50g</div><div class="macro-chip-label" style="color:#4facfe">C</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">0g</div><div class="macro-chip-label" style="color:#FFE66D">F</div></div>
+          </div>
+        </div>
+
+        <div class="meal-card reveal" style="margin-top: var(--space-md);">
+          <div class="meal-card-header"><div class="meal-number" style="background:#00CC88;">4</div><div><div class="meal-title">🧀 Dinner</div><div class="meal-time">~950 kcal</div></div></div>
+          <div class="meal-items">
+            <div class="meal-item"><span class="meal-item-name">Roti</span><span class="meal-item-qty">4 nos</span></div>
+            <div class="meal-item"><span class="meal-item-name">Paneer</span><span class="meal-item-qty">200g</span></div>
+            <div class="meal-item"><span class="meal-item-name">Curd (optional)</span><span class="meal-item-qty">100g</span></div>
+          </div>
+          <div class="meal-macros">
+            <div class="macro-chip"><div class="macro-chip-value">950</div><div class="macro-chip-label">Cal</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">55g</div><div class="macro-chip-label" style="color:#FF6B6B">P</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">85g</div><div class="macro-chip-label" style="color:#4facfe">C</div></div>
+            <div class="macro-chip"><div class="macro-chip-value">40g</div><div class="macro-chip-label" style="color:#FFE66D">F</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Macro Visual Chart -->
+      <div class="reveal" style="margin-top: var(--space-2xl);">
+        <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md); text-align: center;">Daily Macro Split</h3>
+        <div class="donut-chart-container" id="mealDonut" style="width: 200px; height: 200px; margin: 0 auto;"></div>
+        <div style="display: flex; justify-content: center; gap: var(--space-xl); margin-top: var(--space-lg);">
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:600;">
+            <div style="width:12px;height:12px;border-radius:3px;background:#FF6B6B;"></div> Protein
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:600;">
+            <div style="width:12px;height:12px;border-radius:3px;background:#4facfe;"></div> Carbs
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:600;">
+            <div style="width:12px;height:12px;border-radius:3px;background:#FFE66D;"></div> Fats
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center reveal" style="margin-top: var(--space-2xl);">
+        <a href="calculator.html" class="btn btn-primary">Calculate Your Calories →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="siteFooter"></footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    const MealPlan = {
+      currentType: 'nonveg',
+
+      init() {
+        this.renderDonut();
+      },
+
+      setType(type) {
+        this.currentType = type;
+        document.getElementById('nonvegPlan').style.display = type === 'nonveg' ? 'block' : 'none';
+        document.getElementById('vegPlan').style.display = type === 'veg' ? 'block' : 'none';
+        document.querySelectorAll('.toggle-pill').forEach((p, i) => {
+          p.classList.toggle('active', (i === 0 && type === 'nonveg') || (i === 1 && type === 'veg'));
+        });
+        this.renderDonut();
+        RevealManager.init();
+      },
+
+      renderDonut() {
+        const donut = document.getElementById('mealDonut');
+        const data = this.currentType === 'nonveg'
+          ? { p: 150, c: 300, f: 70 }
+          : { p: 120, c: 290, f: 80 };
+
+        const totalCal = data.p * 4 + data.c * 4 + data.f * 9;
+        const pPct = Math.round((data.p * 4 / totalCal) * 100);
+        const cPct = Math.round((data.c * 4 / totalCal) * 100);
+        const fPct = 100 - pPct - cPct;
+
+        const size = 200, cx = 100, cy = 100, r = 75;
+        const circ = 2 * Math.PI * r;
+        let offset = 0;
+        const segments = [
+          { pct: pPct, color: '#FF6B6B' },
+          { pct: cPct, color: '#4facfe' },
+          { pct: fPct, color: '#FFE66D' }
+        ];
+
+        let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform:rotate(-90deg)">`;
+        segments.forEach(s => {
+          const dl = (s.pct / 100) * circ;
+          svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="18" stroke-dasharray="${dl} ${circ - dl}" stroke-dashoffset="${-offset}" stroke-linecap="round"/>`;
+          offset += dl;
+        });
+        svg += '</svg>';
+
+        const totalKcal = this.currentType === 'nonveg' ? '~2750' : '~2600';
+        donut.innerHTML = svg + `<div class="donut-center"><div style="font-family:var(--font-heading);font-weight:900;font-size:1.3rem;">${totalKcal}</div><div style="font-size:0.65rem;color:var(--text-muted);">KCAL/DAY</div></div>`;
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => MealPlan.init());
+  </script>
+</body>
+</html>

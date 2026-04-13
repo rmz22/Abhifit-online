@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>AI Scanner — Fit With Abhi</title>
+  <meta name="description" content="Point your camera at any food, gym equipment, or object. Get instant identification, calories, and usage details.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav-top" id="navTop"></nav>
+  <nav class="nav-bottom" id="navBottom"></nav>
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+  <button class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <section class="page-header">
+    <div class="page-header-bg" style="background: var(--pastel-mint);"></div>
+    <span class="badge badge-accent reveal">🤖 AI POWERED</span>
+    <h1 class="reveal reveal-delay-1">AI OBJECT<br><span class="text-gradient">SCANNER</span></h1>
+    <p class="reveal reveal-delay-2">Point your camera at food, equipment, or any object — get instant details.</p>
+  </section>
+
+  <!-- How To Use -->
+  <section class="section">
+    <div class="container" style="max-width: 600px;">
+      <div class="how-to-section reveal">
+        <h3>📖 How to Use</h3>
+        <div class="how-to-steps">
+          <div class="how-to-step">
+            <div class="how-to-step-num">1</div>
+            <div class="how-to-step-content">
+              <h4>Allow Camera</h4>
+              <p>Tap "Open Camera" and grant permission. The AI model (MobileNet) loads in a few seconds.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">2</div>
+            <div class="how-to-step-content">
+              <h4>Point & Scan</h4>
+              <p>Point your camera at food or gym equipment. The scanner auto-detects objects every 3 seconds.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">3</div>
+            <div class="how-to-step-content">
+              <h4>Get Details</h4>
+              <p>Food items show calories/macros. Equipment shows target muscles and usage tips from Abhi.</p>
+            </div>
+          </div>
+        </div>
+        <div class="how-to-preview">
+          <p class="how-to-preview-label font-accent">What you'll see</p>
+          <svg viewBox="0 0 260 80" fill="none">
+            <rect x="5" y="5" width="80" height="70" rx="10" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2"/>
+            <rect x="10" y="10" width="70" height="60" rx="6" fill="#2D2D2D"/>
+            <line x1="15" y1="40" x2="75" y2="40" stroke="#AAFF00" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <rect x="13" y="13" width="8" height="8" fill="none" stroke="#AAFF00" stroke-width="1"/>
+            <rect x="69" y="13" width="8" height="8" fill="none" stroke="#AAFF00" stroke-width="1"/>
+            <rect x="13" y="59" width="8" height="8" fill="none" stroke="#AAFF00" stroke-width="1"/>
+            <rect x="69" y="59" width="8" height="8" fill="none" stroke="#AAFF00" stroke-width="1"/>
+            <text x="45" y="55" text-anchor="middle" font-size="15">🍌</text>
+            <rect x="100" y="5" width="155" height="70" rx="10" fill="#FEF08A" stroke="#1A1A1A" stroke-width="2"/>
+            <text x="115" y="22" font-size="8" font-weight="800" fill="#1A1A1A">🍌 Banana</text>
+            <text x="115" y="34" font-size="6" fill="#6B6B6B">89 cal · 23g carbs · 1.1g protein</text>
+            <rect x="108" y="42" width="35" height="10" rx="4" fill="#FF6B6B" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="125" y="49" text-anchor="middle" font-size="5" font-weight="700" fill="#FFF">Protein</text>
+            <rect x="148" y="42" width="35" height="10" rx="4" fill="#4facfe" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="165" y="49" text-anchor="middle" font-size="5" font-weight="700" fill="#FFF">Carbs</text>
+            <rect x="188" y="42" width="25" height="10" rx="4" fill="#FFE66D" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="200" y="49" text-anchor="middle" font-size="5" font-weight="700" fill="#1A1A1A">Fat</text>
+            <text x="115" y="66" font-size="5" fill="#5BA85F" font-weight="700">💡 Great pre-workout fuel!</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 500px;">
+      <!-- Disclaimer -->
+      <div class="disclaimer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>Uses TensorFlow.js MobileNet model. Runs entirely in your browser — no data is sent to any server. Results are approximate.</span>
+      </div>
+
+      <!-- Camera Area -->
+      <div style="margin-top: var(--space-xl);">
+        <!-- Before camera access -->
+        <div id="cameraPrompt">
+          <button class="camera-access-btn" onclick="Scanner.startCamera()" id="startCameraBtn">
+            <svg viewBox="0 0 80 80" fill="none">
+              <rect x="10" y="20" width="60" height="45" rx="8" stroke="var(--text-muted)" stroke-width="2.5" fill="none"/>
+              <circle cx="40" cy="42" r="12" stroke="var(--text-muted)" stroke-width="2.5" fill="none"/>
+              <circle cx="40" cy="42" r="5" fill="var(--accent)" opacity="0.5"/>
+              <path d="M28 20 L32 12 L48 12 L52 20" stroke="var(--text-muted)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+            <span>Tap to Open Camera</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Camera access required</span>
+          </button>
+        </div>
+
+        <!-- Camera view (hidden initially) -->
+        <div id="cameraView" style="display: none;">
+          <div class="camera-container" id="cameraContainer">
+            <video id="scannerVideo" autoplay playsinline muted></video>
+            <div class="camera-overlay">
+              <div class="camera-frame-corner tl"></div>
+              <div class="camera-frame-corner tr"></div>
+              <div class="camera-frame-corner bl"></div>
+              <div class="camera-frame-corner br"></div>
+              <div class="scan-line" id="scanLine"></div>
+            </div>
+          </div>
+          <!-- Status -->
+          <div class="text-center" style="margin-top: var(--space-md);">
+            <span id="scanStatus" class="badge badge-outline" style="font-size: 0.8rem;">
+              <span class="dot" style="width:8px;height:8px;background:#FF4444;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>
+              &nbsp;Scanning...
+            </span>
+          </div>
+          <!-- Controls -->
+          <div style="display: flex; gap: var(--space-md); justify-content: center; margin-top: var(--space-md);">
+            <button class="btn btn-ghost btn-sm" onclick="Scanner.stopCamera()">Stop Camera</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div id="modelLoading" style="display: none; text-align: center; margin-top: var(--space-xl);">
+        <div style="display:inline-flex;align-items:center;gap:var(--space-sm);color:var(--text-muted);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4m0 12v4m-7.07-3.93l2.83-2.83m8.48-8.48l2.83-2.83M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83"/></svg>
+          Loading AI Model...
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:var(--space-sm);">First load may take 10-20 seconds</p>
+      </div>
+
+      <!-- Result Panel -->
+      <div id="scanResult" style="display: none; margin-top: var(--space-xl);">
+        <div class="result-board" style="border-color: var(--accent);">
+          <div class="result-board-header">
+            <span style="font-size: 1.5rem;" id="resultIcon">🔍</span>
+            <h3 id="resultName">Detected Object</h3>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Object</span>
+            <span class="result-value" id="resObject">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Confidence</span>
+            <span class="result-value" id="resConfidence">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Category</span>
+            <span class="result-value" id="resCategory">—</span>
+          </div>
+          <div id="resDetails" style="margin-top: var(--space-md);"></div>
+        </div>
+
+        <!-- Scan History -->
+        <div style="margin-top: var(--space-xl);">
+          <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md);">Scan History</h3>
+          <div id="scanHistory" class="log-list"></div>
+        </div>
+      </div>
+
+      <!-- Manual Lookup (fallback) -->
+      <div style="margin-top: var(--space-2xl);" class="reveal">
+        <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md);">Manual Lookup</h3>
+        <p style="font-size: 0.85rem; margin-bottom: var(--space-md);">Can't use camera? Type what you want to look up:</p>
+        <div style="display:flex;gap:var(--space-sm);">
+          <input type="text" id="manualInput" placeholder="e.g., banana, treadmill, dumbbell..." style="flex:1;">
+          <button class="btn btn-primary" onclick="Scanner.manualLookup()">Search</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="siteFooter"></footer>
+
+  <script src="js/app.js"></script>
+  <!-- TensorFlow.js + MobileNet -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+  <script>
+    // Food database with calorie info
+    const FOOD_DB = {
+      'banana': { cal: 89, protein: 1.1, carbs: 23, fat: 0.3, emoji: '🍌', tip: 'Great pre-workout fuel! Quick energy source.' },
+      'apple': { cal: 52, protein: 0.3, carbs: 14, fat: 0.2, emoji: '🍎', tip: 'Rich in fiber. Good snack between meals.' },
+      'orange': { cal: 47, protein: 0.9, carbs: 12, fat: 0.1, emoji: '🍊', tip: 'Packed with Vitamin C for immunity.' },
+      'rice': { cal: 130, protein: 2.7, carbs: 28, fat: 0.3, emoji: '🍚', tip: 'Main carb source in Abhi\'s plan. 300g cooked per meal.' },
+      'chicken': { cal: 165, protein: 31, carbs: 0, fat: 3.6, emoji: '🍗', tip: 'Best lean protein. 150g raw per meal in Abhi\'s plan.' },
+      'egg': { cal: 155, protein: 13, carbs: 1.1, fat: 11, emoji: '🥚', tip: 'Whole eggs: 4 for breakfast in Abhi\'s plan. Complete protein.' },
+      'milk': { cal: 42, protein: 3.4, carbs: 5, fat: 1, emoji: '🥛', tip: 'Low-fat milk: 150ml with oats for breakfast.' },
+      'bread': { cal: 265, protein: 9, carbs: 49, fat: 3.2, emoji: '🍞', tip: 'Whole wheat preferred. Roti is better option for clean bulk.' },
+      'fish': { cal: 206, protein: 22, carbs: 0, fat: 12, emoji: '🐟', tip: '200g raw per meal. Great omega-3 source for skin + recovery.' },
+      'broccoli': { cal: 34, protein: 2.8, carbs: 7, fat: 0.4, emoji: '🥦', tip: 'Excellent veggie choice. High fiber, low calorie.' },
+      'pizza': { cal: 266, protein: 11, carbs: 33, fat: 10, emoji: '🍕', tip: 'Treat meal only. Not ideal for aesthetics goal.' },
+      'salad': { cal: 20, protein: 1.5, carbs: 3.5, fat: 0.2, emoji: '🥗', tip: '1 bowl with lunch in Abhi\'s plan. Essential for micronutrients.' },
+      'water': { cal: 0, protein: 0, carbs: 0, fat: 0, emoji: '💧', tip: '3.5L daily — non-negotiable! Best for skin + performance.' },
+      'coffee': { cal: 2, protein: 0.3, carbs: 0, fat: 0, emoji: '☕', tip: 'Black coffee pre-workout boosts performance. Avoid sugar.' },
+      'oats': { cal: 389, protein: 16.9, carbs: 66, fat: 6.9, emoji: '🥣', tip: '60g with milk for Abhi\'s breakfast. Slow-release energy.' },
+      'paneer': { cal: 265, protein: 18, carbs: 1.2, fat: 21, emoji: '🧀', tip: '200g in veg plan dinner. 55g protein per meal with roti!' },
+      'curd': { cal: 98, protein: 11, carbs: 3.4, fat: 4.3, emoji: '🥛', tip: 'Probiotics for gut health. 100-200g daily in Abhi\'s plan.' },
+      'roti': { cal: 120, protein: 3.5, carbs: 25, fat: 1, emoji: '🫓', tip: '3 medium rotis for evening meal. Complex carb source.' },
+      'ghee': { cal: 900, protein: 0, carbs: 0, fat: 100, emoji: '🧈', tip: '1 tsp per meal. Healthy fat for cooking. Don\'t overdo it.' }
+    };
+
+    // Equipment database
+    const EQUIPMENT_DB = {
+      'treadmill': { muscles: 'Legs, Cardio', emoji: '🏃', tip: 'Great for warm-up (5-10 min) or LISS cardio. Start at 6-8 km/h for warm-up.' },
+      'dumbbell': { muscles: 'Full Body', emoji: '🏋️', tip: 'Most versatile equipment. Used in Abhi\'s plan for presses, curls, and rows.' },
+      'barbell': { muscles: 'Full Body', emoji: '🏋️', tip: 'Essential for squats and RDLs in Abhi\'s leg day.' },
+      'bench': { muscles: 'Chest, Shoulders', emoji: '💺', tip: 'Incline (30-45°) for upper chest. Flat for overall chest development.' },
+      'cable': { muscles: 'Full Body', emoji: '🔌', tip: 'Constant tension! Used for flies, side raises, pulldowns, and pushdowns.' },
+      'bike': { muscles: 'Legs, Cardio', emoji: '🚴', tip: 'Low impact cardio. Good for knee-friendly warm-up or cool-down.' },
+      'pull-up bar': { muscles: 'Back, Biceps', emoji: '🔝', tip: 'Bodyweight back builder. Wide grip for lats, close grip for biceps.' },
+      'leg press': { muscles: 'Quads, Glutes', emoji: '🦵', tip: 'Feet high = more glutes/hams. Feet low = more quads.' },
+      'smith machine': { muscles: 'Full Body', emoji: '⚙️', tip: 'Guided path for safer pressing. Used in Abhi\'s chest and shoulder days.' },
+      'kettlebell': { muscles: 'Full Body', emoji: '🔔', tip: 'Great for swings, goblet squats, and Turkish get-ups.' }
+    };
+
+    const Scanner = {
+      model: null,
+      stream: null,
+      scanning: false,
+      scanInterval: null,
+      history: [],
+
+      async startCamera() {
+        try {
+          document.getElementById('modelLoading').style.display = 'block';
+          document.getElementById('cameraPrompt').style.display = 'none';
+
+          // Load model
+          if (!this.model) {
+            this.model = await mobilenet.load({ version: 2, alpha: 1.0 });
+          }
+
+          document.getElementById('modelLoading').style.display = 'none';
+
+          // Get camera
+          this.stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment', width: { ideal: 640 }, height: { ideal: 480 } }
+          });
+
+          const video = document.getElementById('scannerVideo');
+          video.srcObject = this.stream;
+          document.getElementById('cameraView').style.display = 'block';
+          this.scanning = true;
+
+          // Auto-scan every 3 seconds
+          await video.play();
+          this.scanInterval = setInterval(() => this.scan(), 3000);
+          // Initial scan
+          setTimeout(() => this.scan(), 1500);
+
+        } catch (err) {
+          document.getElementById('modelLoading').style.display = 'none';
+          document.getElementById('cameraPrompt').style.display = 'block';
+          if (err.name === 'NotAllowedError') {
+            Toast.show('Camera access denied. Please allow camera access.', 3000);
+          } else {
+            Toast.show('Error: ' + err.message, 3000);
+          }
+        }
+      },
+
+      stopCamera() {
+        if (this.stream) {
+          this.stream.getTracks().forEach(t => t.stop());
+          this.stream = null;
+        }
+        clearInterval(this.scanInterval);
+        this.scanning = false;
+        document.getElementById('cameraView').style.display = 'none';
+        document.getElementById('cameraPrompt').style.display = 'block';
+      },
+
+      async scan() {
+        if (!this.scanning || !this.model) return;
+        const video = document.getElementById('scannerVideo');
+        if (video.readyState < 2) return;
+
+        try {
+          const predictions = await this.model.classify(video);
+          if (predictions && predictions.length > 0) {
+            const top = predictions[0];
+            if (top.probability > 0.15) {
+              this.showResult(top.className, top.probability);
+            }
+          }
+        } catch (e) {
+          console.error('Scan error:', e);
+        }
+      },
+
+      manualLookup() {
+        const input = document.getElementById('manualInput').value.trim().toLowerCase();
+        if (!input) return;
+
+        // Check food DB
+        for (const [key, data] of Object.entries(FOOD_DB)) {
+          if (input.includes(key) || key.includes(input)) {
+            this.showResult(key, 0.95);
+            return;
+          }
+        }
+
+        // Check equipment DB
+        for (const [key, data] of Object.entries(EQUIPMENT_DB)) {
+          if (input.includes(key) || key.includes(input)) {
+            this.showResult(key, 0.95);
+            return;
+          }
+        }
+
+        // Generic result
+        this.showResult(input, 0.5);
+      },
+
+      showResult(className, confidence) {
+        const name = className.split(',')[0].trim().toLowerCase();
+        const panel = document.getElementById('scanResult');
+        panel.style.display = 'block';
+
+        let category = 'Other';
+        let icon = '🔍';
+        let detailsHTML = '';
+
+        // Check if it's a food
+        let foodMatch = null;
+        for (const [key, data] of Object.entries(FOOD_DB)) {
+          if (name.includes(key) || key.includes(name)) {
+            foodMatch = { key, ...data };
+            break;
+          }
+        }
+
+        if (foodMatch) {
+          category = 'Food';
+          icon = foodMatch.emoji;
+          detailsHTML = `
+            <div style="background:var(--bg-tertiary);border-radius:var(--radius-md);padding:var(--space-lg);margin-top:var(--space-md);">
+              <h4 style="margin-bottom:var(--space-md);">Nutrition (per 100g)</h4>
+              <div class="meal-macros">
+                <div class="macro-chip">
+                  <div class="macro-chip-value">${foodMatch.cal}</div>
+                  <div class="macro-chip-label">Calories</div>
+                </div>
+                <div class="macro-chip">
+                  <div class="macro-chip-value">${foodMatch.protein}g</div>
+                  <div class="macro-chip-label" style="color:#FF6B6B;">Protein</div>
+                </div>
+                <div class="macro-chip">
+                  <div class="macro-chip-value">${foodMatch.carbs}g</div>
+                  <div class="macro-chip-label" style="color:#4facfe;">Carbs</div>
+                </div>
+                <div class="macro-chip">
+                  <div class="macro-chip-value">${foodMatch.fat}g</div>
+                  <div class="macro-chip-label" style="color:#FFE66D;">Fat</div>
+                </div>
+              </div>
+              <div style="margin-top:var(--space-md);padding:var(--space-md);background:rgba(170,255,0,0.08);border-radius:var(--radius-sm);border:1px solid rgba(170,255,0,0.2);">
+                <p style="font-size:0.85rem;"><strong style="color:var(--accent-dark);">💡 Abhi's Tip:</strong> ${foodMatch.tip}</p>
+              </div>
+            </div>`;
+        }
+
+        // Check if it's equipment
+        let equipMatch = null;
+        for (const [key, data] of Object.entries(EQUIPMENT_DB)) {
+          if (name.includes(key) || key.includes(name)) {
+            equipMatch = { key, ...data };
+            break;
+          }
+        }
+
+        if (equipMatch) {
+          category = 'Gym Equipment';
+          icon = equipMatch.emoji;
+          detailsHTML = `
+            <div style="background:var(--bg-tertiary);border-radius:var(--radius-md);padding:var(--space-lg);margin-top:var(--space-md);">
+              <div class="result-row">
+                <span class="result-label">Target Muscles</span>
+                <span class="result-value">${equipMatch.muscles}</span>
+              </div>
+              <div style="margin-top:var(--space-md);padding:var(--space-md);background:rgba(170,255,0,0.08);border-radius:var(--radius-sm);border:1px solid rgba(170,255,0,0.2);">
+                <p style="font-size:0.85rem;"><strong style="color:var(--accent-dark);">💡 How to use:</strong> ${equipMatch.tip}</p>
+              </div>
+            </div>`;
+        }
+
+        if (!foodMatch && !equipMatch) {
+          detailsHTML = `
+            <div style="background:var(--bg-tertiary);border-radius:var(--radius-md);padding:var(--space-lg);margin-top:var(--space-md);">
+              <p style="font-size:0.85rem;">Object detected but not in our fitness database. Try scanning food items or gym equipment for detailed info.</p>
+            </div>`;
+        }
+
+        const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+        document.getElementById('resultIcon').textContent = icon;
+        document.getElementById('resultName').textContent = displayName;
+        document.getElementById('resObject').textContent = displayName;
+        document.getElementById('resConfidence').textContent = Math.round(confidence * 100) + '%';
+        document.getElementById('resCategory').textContent = category;
+        document.getElementById('resDetails').innerHTML = detailsHTML;
+
+        // Add to history
+        this.history.unshift({ name: displayName, icon, category, time: new Date() });
+        this.renderHistory();
+
+        // Update scan status
+        document.getElementById('scanStatus').innerHTML = `<span style="color:var(--accent-dark);">✓</span> Detected: ${displayName}`;
+
+        Toast.show(`${icon} ${displayName} detected!`);
+      },
+
+      renderHistory() {
+        const el = document.getElementById('scanHistory');
+        if (this.history.length === 0) {
+          el.innerHTML = '<div class="log-item" style="justify-content:center;color:var(--text-muted);">No scans yet</div>';
+          return;
+        }
+        el.innerHTML = this.history.slice(0, 10).map(h => `
+          <div class="log-item">
+            <span>${h.icon} ${h.name}</span>
+            <span class="log-item-time">${h.category} · ${formatTime(h.time)}</span>
+          </div>
+        `).join('');
+      }
+    };
+  </script>
+</body>
+</html>

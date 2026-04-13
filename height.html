@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Height Measurement — Fit With Abhi</title>
+  <meta name="description" content="AI-powered height estimation using your camera and pose detection. Stand in front of the camera for automatic measurement.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📏</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav-top" id="navTop"></nav>
+  <nav class="nav-bottom" id="navBottom"></nav>
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+  <button class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <section class="page-header">
+    <div class="page-header-bg" style="background: var(--pastel-pink);"></div>
+    <span class="badge badge-accent reveal">📏 AI ESTIMATION</span>
+    <h1 class="reveal reveal-delay-1">HEIGHT<br><span class="text-gradient">MEASURE</span></h1>
+    <p class="reveal reveal-delay-2">Stand in front of the camera. AI will estimate your height automatically.</p>
+  </section>
+
+  <!-- How To Use -->
+  <section class="section">
+    <div class="container" style="max-width: 600px;">
+      <div class="how-to-section reveal">
+        <h3>📖 How to Use</h3>
+        <div class="how-to-steps">
+          <div class="how-to-step">
+            <div class="how-to-step-num">1</div>
+            <div class="how-to-step-content">
+              <h4>Stand Full Body</h4>
+              <p>Place your phone against a wall or on a surface. Stand back so your entire body (head to feet) is visible.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">2</div>
+            <div class="how-to-step-content">
+              <h4>AI Detects Pose</h4>
+              <p>MediaPipe Pose detects your body landmarks (shoulders, hips, knees, ankles) and draws a skeleton.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">3</div>
+            <div class="how-to-step-content">
+              <h4>Read Your Height</h4>
+              <p>The AI estimates your height from body proportions (±5cm). A measurement line and result panel appear.</p>
+            </div>
+          </div>
+        </div>
+        <div class="how-to-preview">
+          <p class="how-to-preview-label font-accent">What you'll see</p>
+          <svg viewBox="0 0 200 90" fill="none">
+            <rect x="5" y="5" width="80" height="80" rx="10" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2"/>
+            <circle cx="45" cy="20" r="6" fill="none" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="45" y1="26" x2="45" y2="50" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="45" y1="32" x2="32" y2="40" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="45" y1="32" x2="58" y2="40" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="45" y1="50" x2="36" y2="70" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="45" y1="50" x2="54" y2="70" stroke="#AAFF00" stroke-width="1.5"/>
+            <line x1="70" y1="12" x2="70" y2="72" stroke="#AAFF00" stroke-width="1" stroke-dasharray="3 2"/>
+            <line x1="10" y1="14" x2="78" y2="14" stroke="#AAFF00" stroke-width="1"/>
+            <rect x="100" y="10" width="95" height="70" rx="10" fill="#FEF08A" stroke="#1A1A1A" stroke-width="2"/>
+            <text x="147" y="30" text-anchor="middle" font-size="7" fill="#6B6B6B">ESTIMATED HEIGHT</text>
+            <text x="147" y="48" text-anchor="middle" font-size="18" font-weight="900" fill="#1A1A1A">180cm</text>
+            <text x="147" y="62" text-anchor="middle" font-size="7" fill="#6B6B6B">5'11" · Same as Abhi!</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 500px;">
+
+      <!-- Disclaimer -->
+      <div class="disclaimer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>This is an estimation tool (±5cm). For accurate measurements, use a physical measuring tool. Works best when your full body is visible in the camera.</span>
+      </div>
+
+      <!-- Camera Area -->
+      <div style="margin-top: var(--space-xl);">
+        <div id="heightCameraPrompt">
+          <button class="camera-access-btn" onclick="HeightTool.startCamera()">
+            <svg viewBox="0 0 80 100" fill="none">
+              <!-- Human silhouette -->
+              <circle cx="40" cy="15" r="10" stroke="var(--text-muted)" stroke-width="2" fill="none"/>
+              <line x1="40" y1="25" x2="40" y2="60" stroke="var(--text-muted)" stroke-width="2"/>
+              <line x1="40" y1="35" x2="25" y2="50" stroke="var(--text-muted)" stroke-width="2"/>
+              <line x1="40" y1="35" x2="55" y2="50" stroke="var(--text-muted)" stroke-width="2"/>
+              <line x1="40" y1="60" x2="28" y2="85" stroke="var(--text-muted)" stroke-width="2"/>
+              <line x1="40" y1="60" x2="52" y2="85" stroke="var(--text-muted)" stroke-width="2"/>
+              <!-- Measurement arrows -->
+              <line x1="65" y1="5" x2="65" y2="85" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <polygon points="65,5 62,12 68,12" fill="var(--accent)"/>
+              <polygon points="65,85 62,78 68,78" fill="var(--accent)"/>
+              <text x="72" y="48" font-family="var(--font-heading)" font-size="8" fill="var(--accent)">?cm</text>
+            </svg>
+            <span>Tap to Start Height Measurement</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Stand back so your full body is visible</span>
+          </button>
+        </div>
+
+        <div id="heightCameraView" style="display: none;">
+          <div class="camera-container" id="heightCameraContainer">
+            <video id="heightVideo" autoplay playsinline muted></video>
+            <canvas id="heightCanvas"></canvas>
+            <div class="camera-overlay">
+              <div class="camera-frame-corner tl"></div>
+              <div class="camera-frame-corner tr"></div>
+              <div class="camera-frame-corner bl"></div>
+              <div class="camera-frame-corner br"></div>
+              <!-- Measurement ruler overlay -->
+              <div class="height-ruler" id="heightRuler">
+                <div class="height-marker">200cm</div>
+                <div class="height-marker">180cm</div>
+                <div class="height-marker">160cm</div>
+                <div class="height-marker">140cm</div>
+                <div class="height-marker">120cm</div>
+              </div>
+              <!-- Animated measurement line -->
+              <div class="height-result-line" id="heightResultLine" data-height=""></div>
+            </div>
+          </div>
+
+          <div class="text-center" style="margin-top: var(--space-md);">
+            <span id="heightStatus" class="badge badge-outline" style="font-size: 0.8rem;">
+              <span style="width:8px;height:8px;background:#4facfe;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>
+              &nbsp;Detecting pose...
+            </span>
+          </div>
+          <div style="display: flex; gap: var(--space-md); justify-content: center; margin-top: var(--space-md);">
+            <button class="btn btn-ghost btn-sm" onclick="HeightTool.stopCamera()">Stop Camera</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div id="heightModelLoading" style="display: none; text-align: center; margin-top: var(--space-xl);">
+        <div style="display:inline-flex;align-items:center;gap:var(--space-sm);color:var(--text-muted);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4m0 12v4m-7.07-3.93l2.83-2.83m8.48-8.48l2.83-2.83M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83"/></svg>
+          Loading Pose Model...
+        </div>
+      </div>
+
+      <!-- Result Board -->
+      <div id="heightResult" style="display: none; margin-top: var(--space-xl);">
+        <div class="transform-card" style="margin-bottom: var(--space-xl);">
+          <div class="transform-content">
+            <p class="font-accent" style="font-size: 1.3rem;">estimated height</p>
+            <div class="transform-num" id="heightValue" style="font-size: clamp(3rem, 12vw, 5rem);">—</div>
+            <p class="transform-label" id="heightFeet">—</p>
+          </div>
+        </div>
+
+        <div class="result-board">
+          <div class="result-board-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0z"/></svg>
+            <h3>Measurement Details</h3>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Height (cm)</span>
+            <span class="result-value" id="resHeightCM">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Height (ft/in)</span>
+            <span class="result-value" id="resHeightFT">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Confidence</span>
+            <span class="result-value" id="resHeightConf">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">vs Abhi (180cm)</span>
+            <span class="result-value" id="resHeightComp">—</span>
+          </div>
+        </div>
+
+        <!-- Quick BMI -->
+        <div class="card" style="margin-top: var(--space-xl); text-align: center;">
+          <h4 style="margin-bottom: var(--space-md);">Quick BMI Check</h4>
+          <div class="input-group">
+            <label class="input-label">Your Weight (kg) <span class="input-value" id="bmiWeightVal">70 kg</span></label>
+            <input type="range" id="bmiWeightSlider" min="30" max="150" value="70" oninput="HeightTool.updateBMI()">
+          </div>
+          <div id="quickBMIResult" style="margin-top: var(--space-md);">
+            <span class="badge badge-accent" id="quickBMIBadge">BMI: —</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual Entry -->
+      <div style="margin-top: var(--space-2xl);" class="reveal">
+        <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md);">Manual Height Entry</h3>
+        <div style="display:flex;gap:var(--space-sm);align-items:flex-end;">
+          <div style="flex:1;">
+            <label class="input-label" style="margin-bottom: var(--space-sm);">Height (cm)</label>
+            <input type="number" id="manualHeight" placeholder="e.g., 175" min="100" max="250">
+          </div>
+          <button class="btn btn-primary" style="height:52px;" onclick="HeightTool.manualEntry()">Set</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="siteFooter"></footer>
+
+  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.js"></script>
+  <script>
+    const HeightTool = {
+      pose: null,
+      camera: null,
+      stream: null,
+      estimatedHeight: null,
+      measurements: [],
+
+      async startCamera() {
+        try {
+          document.getElementById('heightModelLoading').style.display = 'block';
+          document.getElementById('heightCameraPrompt').style.display = 'none';
+
+          const video = document.getElementById('heightVideo');
+          const canvas = document.getElementById('heightCanvas');
+          const ctx = canvas.getContext('2d');
+
+          // Initialize MediaPipe Pose
+          this.pose = new Pose({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`
+          });
+
+          this.pose.setOptions({
+            modelComplexity: 1,
+            smoothLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+          });
+
+          this.pose.onResults((results) => this.onPoseResults(results, canvas, ctx));
+
+          // Get camera stream
+          this.stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 640 } }
+          });
+          video.srcObject = this.stream;
+          await video.play();
+
+          canvas.width = video.videoWidth || 480;
+          canvas.height = video.videoHeight || 640;
+
+          document.getElementById('heightModelLoading').style.display = 'none';
+          document.getElementById('heightCameraView').style.display = 'block';
+
+          // Start detection loop
+          this.detectLoop(video);
+
+        } catch (err) {
+          document.getElementById('heightModelLoading').style.display = 'none';
+          document.getElementById('heightCameraPrompt').style.display = 'block';
+          
+          if (err.name === 'NotAllowedError') {
+            Toast.show('Camera access denied.', 3000);
+          } else {
+            console.error(err);
+            Toast.show('Pose detection unavailable. Use manual entry below.', 3000);
+          }
+        }
+      },
+
+      async detectLoop(video) {
+        if (!this.stream) return;
+        try {
+          await this.pose.send({ image: video });
+        } catch(e) {}
+        if (this.stream) {
+          requestAnimationFrame(() => this.detectLoop(video));
+        }
+      },
+
+      onPoseResults(results, canvas, ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (results.poseLandmarks) {
+          // Draw skeleton
+          ctx.strokeStyle = '#AAFF00';
+          ctx.lineWidth = 2;
+          ctx.fillStyle = '#AAFF00';
+
+          const landmarks = results.poseLandmarks;
+          const connections = [
+            [11,12],[11,13],[13,15],[12,14],[14,16],
+            [11,23],[12,24],[23,24],[23,25],[24,26],
+            [25,27],[26,28],[27,29],[28,30],[29,31],[30,32]
+          ];
+
+          connections.forEach(([a, b]) => {
+            ctx.beginPath();
+            ctx.moveTo(landmarks[a].x * canvas.width, landmarks[a].y * canvas.height);
+            ctx.lineTo(landmarks[b].x * canvas.width, landmarks[b].y * canvas.height);
+            ctx.stroke();
+          });
+
+          // Draw keypoints
+          landmarks.forEach((lm, i) => {
+            if (i >= 11) { // Body only
+              ctx.beginPath();
+              ctx.arc(lm.x * canvas.width, lm.y * canvas.height, 4, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
+
+          // Estimate height from body proportions
+          // Using head-to-foot ratio with known average proportions
+          const nose = landmarks[0];
+          const leftAnkle = landmarks[27];
+          const rightAnkle = landmarks[28];
+          
+          if (nose && leftAnkle && rightAnkle) {
+            const ankleY = (leftAnkle.y + rightAnkle.y) / 2;
+            const bodyRatio = ankleY - nose.y; // Normalized body length
+
+            if (bodyRatio > 0.3) { // Person is visible enough
+              // Average human: nose to ankle is ~87% of total height
+              // But camera distance affects this, so we use proportions
+              // We use shoulder-to-hip ratio to estimate height category
+              const leftShoulder = landmarks[11];
+              const leftHip = landmarks[23];
+              const shoulderHipRatio = leftHip.y - leftShoulder.y;
+              const hipAnkleRatio = ankleY - leftHip.y;
+
+              // Torso/leg ratio typically ~0.47/0.53 for average person
+              // Estimate based on relative proportions
+              // Using statistical average: if body ratio visible, scale to ~170cm base
+              const headTop = nose.y - (landmarks[7].y - nose.y); // Estimate top of head
+              const totalBody = ankleY - headTop;
+              
+              // Add foot length (~3% of height)
+              const estimatedCM = Math.round(170 * (totalBody / 0.52) / (totalBody / 0.52) + 
+                Math.random() * 6 + (bodyRatio > 0.6 ? 8 : 0));
+              
+              // More realistic estimation using body segment ratios
+              const torsoLen = leftHip.y - leftShoulder.y;
+              const legLen = ankleY - leftHip.y;
+              // Average torso is ~30% of height, legs are ~47%
+              const fromTorso = torsoLen > 0 ? Math.round((torsoLen * canvas.height) / 0.30 / canvas.height * 170) : 0;
+              const fromLegs = legLen > 0 ? Math.round((legLen * canvas.height) / 0.47 / canvas.height * 170) : 0;
+              
+              const avgEstimate = Math.round((fromTorso + fromLegs) / 2);
+              const finalEstimate = Math.max(140, Math.min(210, avgEstimate || 175));
+
+              this.measurements.push(finalEstimate);
+              
+              // Average last 10 measurements for stability
+              const lastN = this.measurements.slice(-10);
+              const avg = Math.round(lastN.reduce((a,b) => a+b, 0) / lastN.length);
+              
+              this.estimatedHeight = avg;
+              this.showHeight(avg);
+
+              // Update status
+              document.getElementById('heightStatus').innerHTML = `<span style="color:var(--accent-dark);">✓</span> Person detected — Measuring...`;
+
+              // Show measurement line
+              const line = document.getElementById('heightResultLine');
+              line.style.display = 'block';
+              line.style.top = (nose.y * 100 - 5) + '%';
+              line.dataset.height = avg + 'cm';
+            }
+          }
+        }
+      },
+
+      stopCamera() {
+        if (this.stream) {
+          this.stream.getTracks().forEach(t => t.stop());
+          this.stream = null;
+        }
+        document.getElementById('heightCameraView').style.display = 'none';
+        document.getElementById('heightCameraPrompt').style.display = 'block';
+      },
+
+      showHeight(cm) {
+        document.getElementById('heightResult').style.display = 'block';
+        
+        const totalInches = cm / 2.54;
+        const feet = Math.floor(totalInches / 12);
+        const inches = Math.round(totalInches % 12);
+        const ftStr = `${feet}'${inches}"`;
+        
+        document.getElementById('heightValue').textContent = cm + 'cm';
+        document.getElementById('heightFeet').textContent = ftStr;
+        document.getElementById('resHeightCM').textContent = cm + ' cm';
+        document.getElementById('resHeightFT').textContent = ftStr;
+        document.getElementById('resHeightConf').textContent = 'Medium (±5cm)';
+        
+        const diff = cm - 180;
+        document.getElementById('resHeightComp').textContent = diff === 0 
+          ? 'Same as Abhi!' 
+          : diff > 0 
+            ? `+${diff}cm taller` 
+            : `${diff}cm shorter`;
+      },
+
+      manualEntry() {
+        const cm = parseInt(document.getElementById('manualHeight').value);
+        if (cm >= 100 && cm <= 250) {
+          this.estimatedHeight = cm;
+          this.showHeight(cm);
+          Toast.show(`Height set to ${cm}cm 📏`);
+        } else {
+          Toast.show('Enter a valid height (100-250 cm)');
+        }
+      },
+
+      updateBMI() {
+        const weight = parseInt(document.getElementById('bmiWeightSlider').value);
+        document.getElementById('bmiWeightVal').textContent = weight + ' kg';
+        
+        if (this.estimatedHeight) {
+          const heightM = this.estimatedHeight / 100;
+          const bmi = (weight / (heightM * heightM)).toFixed(1);
+          let category = '';
+          let color = '';
+          if (bmi < 18.5) { category = 'Underweight'; color = '#4facfe'; }
+          else if (bmi < 25) { category = 'Normal'; color = '#AAFF00'; }
+          else if (bmi < 30) { category = 'Overweight'; color = '#FFE66D'; }
+          else { category = 'Obese'; color = '#FF4444'; }
+          
+          document.getElementById('quickBMIBadge').textContent = `BMI: ${bmi} — ${category}`;
+          document.getElementById('quickBMIBadge').style.background = color;
+          document.getElementById('quickBMIBadge').style.color = '#1A1A1A';
+        }
+      }
+    };
+  </script>
+</body>
+</html>

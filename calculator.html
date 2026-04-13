@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Calorie Calculator — Fit With Abhi</title>
+  <meta name="description" content="Calculate your BMR, TDEE, and macro split with Fit With Abhi's calorie calculator. Get personalized nutrition targets.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav-top" id="navTop"></nav>
+  <nav class="nav-bottom" id="navBottom"></nav>
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+  <button class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <section class="page-header">
+    <div class="page-header-bg" style="background: var(--section-yellow);"></div>
+    <span class="badge badge-accent reveal">🔥 MIFFLIN-ST JEOR</span>
+    <h1 class="reveal reveal-delay-1">CALORIE<br><span class="text-gradient">CALCULATOR</span></h1>
+    <p class="reveal reveal-delay-2">Calculate your BMR, TDEE, BMI, and get the perfect macro breakdown.</p>
+  </section>
+
+  <!-- How To Use -->
+  <section class="section">
+    <div class="container" style="max-width: 600px;">
+      <div class="how-to-section reveal">
+        <h3>📖 How to Use</h3>
+        <div class="how-to-steps">
+          <div class="how-to-step">
+            <div class="how-to-step-num">1</div>
+            <div class="how-to-step-content">
+              <h4>Set Your Info</h4>
+              <p>Slide the age, height, and weight sliders to your values. Select your activity level.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">2</div>
+            <div class="how-to-step-content">
+              <h4>Hit Calculate</h4>
+              <p>Your BMR, TDEE, BMI, and macro split appear instantly with animated visuals.</p>
+            </div>
+          </div>
+          <div class="how-to-step">
+            <div class="how-to-step-num">3</div>
+            <div class="how-to-step-content">
+              <h4>Read Your Results</h4>
+              <p>Get your maintenance, cut, and bulk calories. View your BMI gauge and donut chart for macros.</p>
+            </div>
+          </div>
+        </div>
+        <div class="how-to-preview">
+          <p class="how-to-preview-label font-accent">What you'll see</p>
+          <svg viewBox="0 0 260 70" fill="none">
+            <rect x="5" y="5" width="100" height="60" rx="12" fill="#FEF08A" stroke="#1A1A1A" stroke-width="2"/>
+            <text x="55" y="25" text-anchor="middle" font-size="8" font-weight="700" fill="#6B6B6B">YOUR TDEE</text>
+            <text x="55" y="46" text-anchor="middle" font-size="18" font-weight="900" fill="#1A1A1A">2,650</text>
+            <text x="55" y="58" text-anchor="middle" font-size="7" fill="#6B6B6B">kcal/day</text>
+            <circle cx="170" cy="35" r="25" fill="none" stroke="#E0E0E0" stroke-width="5"/>
+            <circle cx="170" cy="35" r="25" fill="none" stroke="#FF6B6B" stroke-width="5" stroke-dasharray="47 157" stroke-linecap="round" transform="rotate(-90 170 35)"/>
+            <circle cx="170" cy="35" r="25" fill="none" stroke="#4facfe" stroke-width="5" stroke-dasharray="71 157" stroke-linecap="round" stroke-dashoffset="-47" transform="rotate(-90 170 35)"/>
+            <circle cx="170" cy="35" r="25" fill="none" stroke="#FFE66D" stroke-width="5" stroke-dasharray="39 157" stroke-linecap="round" stroke-dashoffset="-118" transform="rotate(-90 170 35)"/>
+            <text x="170" y="38" text-anchor="middle" font-size="8" font-weight="800" fill="#1A1A1A">MACROS</text>
+            <rect x="215" y="10" width="40" height="12" rx="4" fill="#FF6B6B" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="235" y="19" text-anchor="middle" font-size="6" font-weight="700" fill="#1A1A1A">198g P</text>
+            <rect x="215" y="28" width="40" height="12" rx="4" fill="#4facfe" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="235" y="37" text-anchor="middle" font-size="6" font-weight="700" fill="#1A1A1A">298g C</text>
+            <rect x="215" y="46" width="40" height="12" rx="4" fill="#FFE66D" stroke="#1A1A1A" stroke-width="1"/>
+            <text x="235" y="55" text-anchor="middle" font-size="6" font-weight="700" fill="#1A1A1A">74g F</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 500px;">
+
+      <!-- Gender -->
+      <div class="input-group reveal">
+        <label class="input-label">Gender</label>
+        <div class="toggle-pills" id="genderToggle">
+          <div class="toggle-pill active" data-value="male" onclick="CalcApp.setGender('male')">♂ Male</div>
+          <div class="toggle-pill" data-value="female" onclick="CalcApp.setGender('female')">♀ Female</div>
+        </div>
+      </div>
+
+      <!-- Age -->
+      <div class="input-group reveal reveal-delay-1">
+        <label class="input-label">
+          Age <span class="input-value" id="ageValue">21 yrs</span>
+        </label>
+        <input type="range" id="ageSlider" min="10" max="80" value="21" oninput="CalcApp.updateSlider('age')">
+      </div>
+
+      <!-- Height -->
+      <div class="input-group reveal reveal-delay-2">
+        <label class="input-label">
+          Height <span class="input-value" id="heightValue">180 cm</span>
+        </label>
+        <input type="range" id="heightSlider" min="100" max="220" value="180" oninput="CalcApp.updateSlider('height')">
+      </div>
+
+      <!-- Weight -->
+      <div class="input-group reveal reveal-delay-3">
+        <label class="input-label">
+          Weight <span class="input-value" id="weightValue">81 kg</span>
+        </label>
+        <input type="range" id="weightSlider" min="30" max="200" value="81" oninput="CalcApp.updateSlider('weight')">
+      </div>
+
+      <!-- Activity Level -->
+      <div class="input-group reveal">
+        <label class="input-label">Activity Level</label>
+        <div class="activity-cards" id="activityCards">
+          <div class="activity-card" data-multiplier="1.2" onclick="CalcApp.setActivity(this)">
+            <div class="activity-card-emoji">🪑</div>
+            <div class="activity-card-name">Sedentary</div>
+            <div class="activity-card-desc">Little or no exercise</div>
+          </div>
+          <div class="activity-card" data-multiplier="1.375" onclick="CalcApp.setActivity(this)">
+            <div class="activity-card-emoji">🚶</div>
+            <div class="activity-card-name">Light</div>
+            <div class="activity-card-desc">1-3 days/week</div>
+          </div>
+          <div class="activity-card active" data-multiplier="1.55" onclick="CalcApp.setActivity(this)">
+            <div class="activity-card-emoji">🏋️</div>
+            <div class="activity-card-name">Moderate</div>
+            <div class="activity-card-desc">3-5 days/week</div>
+          </div>
+          <div class="activity-card" data-multiplier="1.725" onclick="CalcApp.setActivity(this)">
+            <div class="activity-card-emoji">💪</div>
+            <div class="activity-card-name">Heavy</div>
+            <div class="activity-card-desc">6-7 days/week</div>
+          </div>
+          <div class="activity-card" data-multiplier="1.9" onclick="CalcApp.setActivity(this)" style="grid-column: span 2;">
+            <div class="activity-card-emoji">🔥</div>
+            <div class="activity-card-name">Extreme</div>
+            <div class="activity-card-desc">Athlete / 2x daily</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculate Button -->
+      <div class="reveal" style="margin-top: var(--space-lg);">
+        <button class="btn btn-primary btn-lg" style="width: 100%;" onclick="CalcApp.calculate()">
+          🔥 Calculate My Calories
+        </button>
+      </div>
+
+      <!-- Results (hidden initially) -->
+      <div id="calcResults" style="display: none;">
+
+        <!-- TDEE Big Number -->
+        <div class="transform-card reveal" style="margin-top: var(--space-2xl);">
+          <div class="transform-content">
+            <p class="font-accent" style="font-size: 1.3rem;">your daily calories</p>
+            <div class="transform-num" id="tdeeNumber" style="font-size: clamp(3rem, 12vw, 5rem);">0</div>
+            <p class="transform-label">kcal / day (TDEE)</p>
+          </div>
+        </div>
+
+        <!-- Result Board -->
+        <div class="result-board reveal" style="margin-top: var(--space-xl);">
+          <div class="result-board-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <h3>Your Results</h3>
+          </div>
+          <div class="result-row">
+            <span class="result-label">BMR (Basal)</span>
+            <span class="result-value" id="resBMR">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">TDEE (Maintain)</span>
+            <span class="result-value" id="resTDEE">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Cut (−500)</span>
+            <span class="result-value" id="resCut">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Bulk (+500)</span>
+            <span class="result-value" id="resBulk">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">BMI</span>
+            <span class="result-value" id="resBMI">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">BMI Category</span>
+            <span class="result-value" id="resBMICat">—</span>
+          </div>
+        </div>
+
+        <!-- BMI Gauge -->
+        <div class="reveal" style="margin-top: var(--space-xl);">
+          <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md); text-align: center;">BMI Gauge</h3>
+          <div class="gauge-container" id="bmiGauge"></div>
+        </div>
+
+        <!-- Macro Donut -->
+        <div class="reveal" style="margin-top: var(--space-xl);">
+          <h3 style="font-size: 1.1rem; margin-bottom: var(--space-md); text-align: center;">Macro Breakdown</h3>
+          <div class="donut-chart-container" id="macroDonut" style="width: 200px; height: 200px;"></div>
+          <div class="meal-macros" style="margin-top: var(--space-lg);">
+            <div class="macro-chip">
+              <div class="macro-chip-value" id="macroProtein">—</div>
+              <div class="macro-chip-label" style="color: #FF6B6B;">Protein</div>
+            </div>
+            <div class="macro-chip">
+              <div class="macro-chip-value" id="macroCarbs">—</div>
+              <div class="macro-chip-label" style="color: #4facfe;">Carbs</div>
+            </div>
+            <div class="macro-chip">
+              <div class="macro-chip-value" id="macroFats">—</div>
+              <div class="macro-chip-label" style="color: #FFE66D;">Fats</div>
+            </div>
+            <div class="macro-chip">
+              <div class="macro-chip-value" id="macroFiber">—</div>
+              <div class="macro-chip-label" style="color: #AAFF00;">Fiber</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison with Abhi -->
+        <div class="card card-accent reveal" style="margin-top: var(--space-xl); text-align: center;">
+          <p class="font-accent" style="font-size: 1.2rem; color: var(--accent);">Compare with Abhi</p>
+          <p style="margin: var(--space-sm) 0;">Abhi's TDEE: <strong style="color:var(--accent-dark);">~2750 kcal</strong></p>
+          <p id="comparisonText" style="font-size: 0.85rem;"></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="siteFooter"></footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    const CalcApp = {
+      gender: 'male',
+      activityMultiplier: 1.55,
+
+      setGender(g) {
+        this.gender = g;
+        document.querySelectorAll('#genderToggle .toggle-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.value === g);
+        });
+      },
+
+      setActivity(el) {
+        document.querySelectorAll('.activity-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        this.activityMultiplier = parseFloat(el.dataset.multiplier);
+      },
+
+      updateSlider(type) {
+        const val = document.getElementById(type + 'Slider').value;
+        const labels = { age: ' yrs', height: ' cm', weight: ' kg' };
+        document.getElementById(type + 'Value').textContent = val + labels[type];
+      },
+
+      calculate() {
+        const age = parseInt(document.getElementById('ageSlider').value);
+        const height = parseInt(document.getElementById('heightSlider').value);
+        const weight = parseInt(document.getElementById('weightSlider').value);
+
+        // Mifflin-St Jeor
+        let bmr;
+        if (this.gender === 'male') {
+          bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+        } else {
+          bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+        }
+
+        const tdee = Math.round(bmr * this.activityMultiplier);
+        const bmi = (weight / ((height/100) ** 2)).toFixed(1);
+
+        // BMI Category
+        let bmiCat;
+        if (bmi < 18.5) bmiCat = 'Underweight';
+        else if (bmi < 25) bmiCat = 'Normal';
+        else if (bmi < 30) bmiCat = 'Overweight';
+        else bmiCat = 'Obese';
+
+        // Macros (30% P, 45% C, 25% F)
+        const proteinCal = tdee * 0.30;
+        const carbsCal = tdee * 0.45;
+        const fatsCal = tdee * 0.25;
+        const proteinG = Math.round(proteinCal / 4);
+        const carbsG = Math.round(carbsCal / 4);
+        const fatsG = Math.round(fatsCal / 9);
+
+        // Show results
+        document.getElementById('calcResults').style.display = 'block';
+
+        // Animate TDEE number
+        const tdeeEl = document.getElementById('tdeeNumber');
+        this.animateNumber(tdeeEl, tdee);
+
+        // Fill result board
+        document.getElementById('resBMR').textContent = Math.round(bmr) + ' kcal';
+        document.getElementById('resTDEE').textContent = tdee + ' kcal';
+        document.getElementById('resCut').textContent = (tdee - 500) + ' kcal';
+        document.getElementById('resBulk').textContent = (tdee + 500) + ' kcal';
+        document.getElementById('resBMI').textContent = bmi;
+        document.getElementById('resBMICat').textContent = bmiCat;
+
+        // Macros
+        document.getElementById('macroProtein').textContent = proteinG + 'g';
+        document.getElementById('macroCarbs').textContent = carbsG + 'g';
+        document.getElementById('macroFats').textContent = fatsG + 'g';
+        document.getElementById('macroFiber').textContent = '25-30g';
+
+        // Donut chart
+        const donut = document.getElementById('macroDonut');
+        donut.innerHTML = '';
+        const size = 200;
+        const cx = 100, cy = 100, r = 75;
+        const circ = 2 * Math.PI * r;
+        let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform:rotate(-90deg)">`;
+        const segments = [
+          { pct: 30, color: '#FF6B6B' },
+          { pct: 45, color: '#4facfe' },
+          { pct: 25, color: '#FFE66D' }
+        ];
+        let dashOffset = 0;
+        segments.forEach(s => {
+          const dashLen = (s.pct / 100) * circ;
+          svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="20" stroke-dasharray="${dashLen} ${circ - dashLen}" stroke-dashoffset="${-dashOffset}" stroke-linecap="round"/>`;
+          dashOffset += dashLen;
+        });
+        svg += '</svg>';
+        donut.innerHTML = svg + `<div class="donut-center"><div style="font-family:var(--font-heading);font-weight:900;font-size:1.5rem;">${tdee}</div><div style="font-size:0.7rem;color:var(--text-muted);">KCAL</div></div>`;
+
+        // BMI Gauge
+        this.renderBMIGauge(parseFloat(bmi));
+
+        // Comparison
+        const diff = tdee - 2750;
+        const compText = diff > 0 
+          ? `Your TDEE is ${diff} kcal higher than Abhi's` 
+          : diff < 0 
+            ? `Your TDEE is ${Math.abs(diff)} kcal lower than Abhi's`
+            : `Same TDEE as Abhi! 💪`;
+        document.getElementById('comparisonText').textContent = compText;
+
+        // Scroll into view
+        document.getElementById('calcResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Re-init reveal for new elements
+        RevealManager.init();
+
+        Toast.show('Calculation complete! 🔥');
+      },
+
+      animateNumber(el, target) {
+        let current = 0;
+        const duration = 1200;
+        const start = performance.now();
+        const step = (ts) => {
+          const progress = Math.min((ts - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          current = Math.round(target * eased);
+          el.textContent = current.toLocaleString();
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      },
+
+      renderBMIGauge(bmi) {
+        const gauge = document.getElementById('bmiGauge');
+        const angle = Math.min(Math.max((bmi - 10) / 35 * 180, 0), 180);
+        
+        gauge.innerHTML = `
+          <svg viewBox="0 0 200 120">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#4facfe"/>
+                <stop offset="30%" stop-color="#AAFF00"/>
+                <stop offset="60%" stop-color="#FFE66D"/>
+                <stop offset="100%" stop-color="#FF4444"/>
+              </linearGradient>
+            </defs>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--bg-tertiary)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"/>
+            <!-- Needle -->
+            <line x1="100" y1="100" x2="${100 + 60 * Math.cos((180 - angle) * Math.PI / 180)}" y2="${100 - 60 * Math.sin((180 - angle) * Math.PI / 180)}" stroke="var(--text-primary)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="6" fill="var(--accent)"/>
+          </svg>
+          <div class="gauge-label">
+            <div class="gauge-value">${bmi.toFixed(1)}</div>
+            <div class="gauge-text">BMI</div>
+          </div>
+        `;
+      }
+    };
+  </script>
+</body>
+</html>

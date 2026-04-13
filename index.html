@@ -1,1314 +1,477 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhijit Das – Aesthetics Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #1a1a24;
-    --card: #16161f;
-    --border: rgba(255,255,255,0.07);
-    --text: #f0f0f5;
-    --muted: #888899;
-    --g1: #ff6b35;
-    --g2: #f7c948;
-    --g3: #00d4aa;
-    --g4: #7b61ff;
-    --accent: #ff6b35;
-    --shadow: rgba(255,107,53,0.15);
-    --nav-bg: rgba(10,10,15,0.92);
-  }
-  [data-theme="light"] {
-    --bg: #f5f4ef;
-    --bg2: #ece9e0;
-    --bg3: #e2ddd2;
-    --card: #ffffff;
-    --border: rgba(0,0,0,0.1);
-    --text: #1a1a2e;
-    --muted: #66667a;
-    --shadow: rgba(255,107,53,0.1);
-    --nav-bg: rgba(245,244,239,0.92);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-    transition: background 0.4s, color 0.4s;
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 5%;
-    height: 64px;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background 0.4s;
-  }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    background: linear-gradient(90deg, var(--g1), var(--g2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
-  }
-  .nav-links {
-    display: flex; align-items: center; gap: 32px;
-    list-style: none;
-  }
-  .nav-links a {
-    text-decoration: none; color: var(--muted);
-    font-size: 0.82rem; font-weight: 500; letter-spacing: 1.2px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
-
-  /* ── NAV INSTAGRAM BUTTON ── */
-  .nav-ig-btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 7px 14px; border-radius: 999px;
-    background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-    color: #fff; font-size: 0.78rem; font-weight: 600;
-    text-decoration: none; letter-spacing: 0.3px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-    box-shadow: 0 4px 14px rgba(221,42,123,0.3);
-    flex-shrink: 0;
-  }
-  .nav-ig-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(221,42,123,0.45); }
-  .nav-ig-label { display: inline; }
-
-  /* ── THEME TOGGLE ── */
-  .theme-toggle {
-    width: 52px; height: 28px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    cursor: pointer;
-    position: relative;
-    transition: background 0.3s;
-    flex-shrink: 0;
-  }
-  .theme-toggle::after {
-    content: '';
-    position: absolute; top: 3px; left: 3px;
-    width: 20px; height: 20px;
-    background: linear-gradient(135deg, var(--g1), var(--g2));
-    border-radius: 50%;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  [data-theme="light"] .theme-toggle::after { transform: translateX(24px); }
-  .toggle-icon {
-    position: absolute; font-size: 12px;
-    top: 50%; transform: translateY(-50%);
-  }
-  .icon-sun { right: 6px; }
-  .icon-moon { left: 6px; }
-
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; padding: 4px;
-  }
-  .hamburger span {
-    display: block; width: 24px; height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 100px 5% 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(255,107,53,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(123,97,255,0.1) 0%, transparent 50%);
-  }
-  .hero-grid {
-    position: absolute; inset: 0; z-index: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 680px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(255,107,53,0.12);
-    border: 1px solid rgba(255,107,53,0.3);
-    padding: 6px 16px; border-radius: 999px;
-    font-size: 0.78rem; font-weight: 500; letter-spacing: 1.5px;
-    text-transform: uppercase; color: var(--g1);
-    margin-bottom: 24px;
-    animation: fadeUp 0.8s 0.1s both;
-  }
-  .hero-badge span { width: 6px; height: 6px; background: var(--g1); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.3)} }
-  .hero-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 10vw, 8rem);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    animation: fadeUp 0.8s 0.2s both;
-  }
-  .hero-name .line1 { display: block; }
-  .hero-name .line2 {
-    display: block;
-    background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
-    background-size: 200%;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: shimmer 4s linear infinite, fadeUp 0.8s 0.3s both;
-  }
-  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
-  .hero-sub {
-    font-size: 1.1rem; color: var(--muted);
-    margin: 20px 0 32px;
-    line-height: 1.7;
-    animation: fadeUp 0.8s 0.4s both;
-  }
-  .hero-stats {
-    display: flex; gap: 32px; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.5s both;
-  }
-  .hero-stat {
-    display: flex; flex-direction: column;
-    border-left: 2px solid var(--accent);
-    padding-left: 14px;
-  }
-  .hero-stat .val {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem; font-weight: 800;
-    background: linear-gradient(135deg, var(--g1), var(--g2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero-stat .lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-  .hero-cta {
-    display: flex; gap: 14px; flex-wrap: wrap;
-    margin-top: 36px;
-    animation: fadeUp 0.8s 0.6s both;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 28px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--g1), var(--g2));
-    color: #0a0a0f; font-weight: 700; font-size: 0.9rem;
-    text-decoration: none; border: none; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 32px var(--shadow);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px var(--shadow); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 28px; border-radius: 8px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text); font-weight: 500; font-size: 0.9rem;
-    text-decoration: none; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--accent); background: rgba(255,107,53,0.06); }
-
-  /* ── ACHIEVEMENT BANNER ── */
-  .achievement-banner {
-    background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(123,97,255,0.12));
-    border: 1px solid rgba(0,212,170,0.25);
-    border-radius: 16px;
-    padding: 20px 28px;
-    margin: 80px 5% 0;
-    display: flex; align-items: center; gap: 20px;
-    flex-wrap: wrap;
-  }
-  .achievement-icon { font-size: 2.5rem; }
-  .achievement-text h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem; font-weight: 700; color: var(--g3);
-  }
-  .achievement-text p { font-size: 0.9rem; color: var(--muted); margin-top: 2px; }
-  .achievement-badge {
-    margin-left: auto;
-    background: rgba(0,212,170,0.15);
-    border: 1px solid rgba(0,212,170,0.3);
-    border-radius: 8px; padding: 8px 18px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem; color: var(--g3); letter-spacing: 2px;
-  }
-
-  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-
-  /* ── SECTION BASE ── */
-  section { padding: 80px 5%; }
-  .section-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 12px;
-  }
-  .section-label::before {
-    content: ''; display: block;
-    width: 24px; height: 2px; background: var(--accent);
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1; letter-spacing: 1px;
-    margin-bottom: 48px;
-  }
-  .section-title span {
-    background: linear-gradient(90deg, var(--g1), var(--g2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-
-  /* ── CARDS ── */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .card:hover { transform: translateY(-4px); border-color: rgba(255,107,53,0.2); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
-  .card:hover::before { opacity: 1; }
-
-  /* ── MEAL PLAN ── */
-  .meals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .meal-card { cursor: default; }
-  .meal-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 20px;
-  }
-  .meal-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem;
-  }
-  .meal-icon.m1 { background: rgba(255,107,53,0.12); }
-  .meal-icon.m2 { background: rgba(247,201,72,0.12); }
-  .meal-icon.m3 { background: rgba(0,212,170,0.12); }
-  .meal-icon.m4 { background: rgba(123,97,255,0.12); }
-  .meal-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
-  .meal-subtitle { font-size: 0.75rem; color: var(--muted); }
-  .meal-items { list-style: none; margin-bottom: 20px; }
-  .meal-items li {
-    padding: 6px 0;
-    font-size: 0.88rem; color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    display: flex; gap: 8px;
-  }
-  .meal-items li::before { content: '•'; color: var(--accent); font-size: 1rem; flex-shrink: 0; }
-  .macro-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .macro-chip {
-    padding: 4px 12px; border-radius: 999px;
-    font-size: 0.73rem; font-weight: 600;
-  }
-  .mc-cal { background: rgba(255,107,53,0.12); color: var(--g1); }
-  .mc-pro { background: rgba(0,212,170,0.12); color: var(--g3); }
-  .mc-carb { background: rgba(247,201,72,0.12); color: var(--g2); }
-  .mc-fat { background: rgba(123,97,255,0.12); color: var(--g4); }
-
-  /* ── MACROS TOTAL ── */
-  .macros-total {
-    background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(247,201,72,0.08));
-    border: 1px solid rgba(255,107,53,0.2);
-    border-radius: 16px; padding: 28px;
-    margin-top: 24px;
-    display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
-  }
-  .macro-bar { flex: 1; min-width: 140px; }
-  .macro-bar-label {
-    display: flex; justify-content: space-between;
-    font-size: 0.78rem; margin-bottom: 6px;
-  }
-  .macro-bar-label span:first-child { font-weight: 600; }
-  .macro-bar-label span:last-child { color: var(--muted); }
-  .bar-track { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 3px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); }
-
-  /* ── TRAINING ── */
-  .training-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-  }
-  .day-number {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem; line-height: 1;
-    background: linear-gradient(135deg, var(--g1), var(--g2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 4px;
-  }
-  .day-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 16px; }
-  .exercise-list { list-style: none; }
-  .exercise-list li {
-    padding: 8px 0; font-size: 0.85rem;
-    border-bottom: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  }
-  .exercise-list li:last-child { border-bottom: none; }
-  .ex-name { color: var(--text); }
-  .ex-sets {
-    font-size: 0.72rem; font-weight: 600;
-    background: rgba(255,107,53,0.1); color: var(--g1);
-    padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
-  }
-  .repeat-tag {
-    display: inline-block; margin-top: 12px;
-    background: rgba(123,97,255,0.1); border: 1px solid rgba(123,97,255,0.2);
-    color: var(--g4); font-size: 0.75rem; font-weight: 600;
-    padding: 4px 12px; border-radius: 6px;
-  }
-
-  /* ── ABS CIRCUIT ── */
-  .abs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .abs-card {
-    display: flex; gap: 16px; align-items: flex-start;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 18px;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .abs-card:hover { transform: translateY(-3px); border-color: rgba(0,212,170,0.3); }
-  .abs-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; line-height: 1;
-    color: var(--g3); flex-shrink: 0; width: 32px;
-  }
-  .abs-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
-  .abs-detail { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-  .abs-sets { font-size: 0.72rem; color: var(--g3); font-weight: 600; margin-top: 4px; }
-  .plank-card {
-    background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(123,97,255,0.08));
-    border: 1px solid rgba(0,212,170,0.2);
-    border-radius: 12px; padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .plank-fire { font-size: 2rem; }
-  .plank-card h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
-  .plank-card p { font-size: 0.82rem; color: var(--muted); }
-
-  /* ── VEGE PLAN ── */
-  .vege-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  /* ── SUPPS ── */
-  .supp-card {
-    display: flex; gap: 20px; align-items: flex-start;
-    background: linear-gradient(135deg, rgba(247,201,72,0.06), rgba(255,107,53,0.06));
-    border: 1px solid rgba(247,201,72,0.2);
-    border-radius: 16px; padding: 28px;
-  }
-  .supp-icon { font-size: 3rem; flex-shrink: 0; }
-  .supp-name { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--g2); margin-bottom: 6px; }
-  .supp-dose { font-size: 0.9rem; font-weight: 600; color: var(--g1); margin-bottom: 8px; }
-  .supp-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
-
-  /* ── SKIN ── */
-  .skin-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .skin-time {
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-  .skin-steps { list-style: none; }
-  .skin-steps li {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.86rem;
-  }
-  .skin-step-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,107,53,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-  .skin-water-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px; margin-top: 24px;
-  }
-  .water-tip {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px;
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .water-tip .wt-icon { font-size: 1.6rem; flex-shrink: 0; }
-  .water-tip h4 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-  .water-tip p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-
-  /* ── CONTACT ── */
-  #contact { background: var(--bg2); }
-  .contact-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 48px; align-items: start;
-  }
-  .contact-info h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.4rem; font-weight: 800; margin-bottom: 12px;
-  }
-  .contact-info p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
-  .contact-links { display: flex; flex-direction: column; gap: 14px; }
-  .contact-link {
-    display: flex; align-items: center; gap: 14px;
-    text-decoration: none; color: var(--text);
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 14px 18px;
-    font-size: 0.88rem; font-weight: 500;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
-  .contact-link .cl-icon {
-    width: 38px; height: 38px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-  }
-  .cl-ig { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
-  .cl-dm { background: linear-gradient(135deg, var(--g4), var(--g3)); }
-
-  /* ── DM FORM ── */
-  .dm-form { display: flex; flex-direction: column; gap: 16px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-  .form-input, .form-textarea {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px 16px;
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    resize: none;
-  }
-  .form-input:focus, .form-textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255,107,53,0.12);
-  }
-  .form-textarea { min-height: 100px; }
-  .form-submit {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 14px; border-radius: 10px;
-    background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-    color: #fff; font-weight: 700; font-size: 0.9rem;
-    border: none; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    letter-spacing: 0.5px;
-  }
-  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(221,42,123,0.3); }
-  .form-note { font-size: 0.76rem; color: var(--muted); text-align: center; }
-  .form-note a { color: var(--accent); text-decoration: none; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 32px 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-  }
-  .footer-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; letter-spacing: 2px;
-    background: linear-gradient(90deg, var(--g1), var(--g2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .footer-text { font-size: 0.78rem; color: var(--muted); text-align: center; }
-  .footer-ig a {
-    display: flex; align-items: center; gap: 8px;
-    text-decoration: none; color: var(--muted);
-    font-size: 0.82rem; font-weight: 500;
-    transition: color 0.2s;
-  }
-  .footer-ig a:hover { color: var(--accent); }
-
-  /* ── TABS ── */
-  .tabs { display: flex; gap: 4px; margin-bottom: 32px; flex-wrap: wrap; }
-  .tab-btn {
-    padding: 10px 22px; border-radius: 8px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted); font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; font-weight: 500; cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tab-btn.active, .tab-btn:hover {
-    background: linear-gradient(135deg, rgba(255,107,53,0.12), rgba(247,201,72,0.08));
-    border-color: rgba(255,107,53,0.3); color: var(--text);
-  }
-  .tab-btn.active { color: var(--g1); }
-  .tab-pane { display: none; }
-  .tab-pane.active { display: block; }
-
-  /* ── MOBILE / RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .training-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .meals-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .macros-total { flex-direction: column; gap: 16px; }
-    .macros-total > div:first-child { flex-basis: auto; }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 4%; }
-    .nav-links {
-      display: none; position: fixed;
-      top: 64px; left: 0; right: 0; bottom: 0;
-      background: var(--bg2);
-      padding: 32px 6%;
-      flex-direction: column; gap: 24px;
-      border-top: 1px solid var(--border);
-      z-index: 99; overflow-y: auto;
-    }
-    .nav-links.open { display: flex; }
-    .nav-links a { font-size: 1.05rem; }
-    .nav-ig-label { display: none; }
-    .nav-ig-btn { padding: 7px 10px; }
-    .hamburger { display: flex; }
-
-    #hero { padding: 90px 4% 50px; min-height: auto; }
-    .hero-content { max-width: 100%; }
-    .hero-stats { gap: 18px; }
-    .hero-stat .val { font-size: 1.4rem; }
-    .hero-cta { flex-direction: column; }
-    .hero-cta a { text-align: center; justify-content: center; width: 100%; }
-
-    .achievement-banner { flex-direction: column; gap: 12px; padding: 18px; margin: 40px 4% 0; }
-    .achievement-badge { margin-left: 0; align-self: flex-start; }
-
-    section { padding: 56px 4%; }
-
-    .meals-grid { grid-template-columns: 1fr; }
-    .vege-grid { grid-template-columns: 1fr; }
-    .training-grid { grid-template-columns: 1fr; }
-    .abs-grid { grid-template-columns: 1fr; }
-    .skin-grid { grid-template-columns: 1fr; }
-    .skin-water-grid { grid-template-columns: 1fr; }
-    .macros-total { flex-direction: column; gap: 16px; }
-    .macros-total > div:first-child { flex-basis: auto; }
-
-    .contact-grid { grid-template-columns: 1fr; gap: 28px; }
-
-    footer {
-      flex-direction: column; text-align: center; gap: 12px;
-      padding: 24px 4%;
-    }
-    .footer-ig a { justify-content: center; }
-
-    .section-title { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 28px; }
-
-    .tabs { gap: 8px; }
-    .tab-btn { padding: 9px 16px; font-size: 0.8rem; }
-  }
-
-  @media (max-width: 480px) {
-    .nav-logo { font-size: 1.3rem; }
-    .hero-name { font-size: clamp(3.2rem, 14vw, 5rem); }
-    .hero-sub { font-size: 0.95rem; }
-    .hero-stat .val { font-size: 1.2rem; }
-    .hero-stats { gap: 14px; }
-    .card { padding: 20px; }
-    .supp-card { flex-direction: column; gap: 12px; }
-    .macro-chips { gap: 6px; }
-    .macro-chip { font-size: 0.68rem; padding: 3px 9px; }
-    .abs-card { flex-direction: row; }
-  }
-
-  /* ── ANIMATIONS FOR SCROLL ── */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── TOAST ── */
-  .toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--card); border: 1px solid var(--g3);
-    border-radius: 12px; padding: 14px 20px;
-    font-size: 0.88rem; color: var(--text);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    z-index: 999; display: none;
-    animation: slideIn 0.3s ease;
-  }
-  @keyframes slideIn { from{transform:translateX(100px);opacity:0} to{transform:translateX(0);opacity:1} }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Fit With Abhi — Your Personal Fitness Companion</title>
+  <meta name="description" content="Fit With Abhi — Your pocket guide to fitness, nutrition, and transformation. Free tools by Abhijit Das.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <nav class="nav-top" id="navTop"></nav>
+  <nav class="nav-bottom" id="navBottom"></nav>
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+  <button class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">ABHIJIT DAS</div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#meals" onclick="closeNav()">Nutrition</a></li>
-    <li><a href="#training" onclick="closeNav()">Training</a></li>
-    <li><a href="#abs" onclick="closeNav()">Abs</a></li>
-    <li><a href="#lifestyle" onclick="closeNav()">Lifestyle</a></li>
-    <li><a href="#contact" onclick="closeNav()">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="https://www.instagram.com/abhiiijittt05/" target="_blank" class="nav-ig-btn" title="Instagram @abhiiijittt05">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      <span class="nav-ig-label">@abhiiijittt05</span>
-    </a>
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
-      <span class="toggle-icon icon-sun">☀</span>
-      <span class="toggle-icon icon-moon">🌙</span>
-    </button>
-    <div class="hamburger" id="hamburger" onclick="toggleNav()">
-      <span></span><span></span><span></span>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
     </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-badge"><span></span> My Transform Journey 2026</div>
-    <h1 class="hero-name">
-      <span class="line1">ABHIJIT</span>
-      <span class="line2">DAS</span>
-    </h1>
-    <p class="hero-sub">
-      21-year-old on a mission — building an aesthetic physique through disciplined nutrition, progressive training &amp; mindful recovery. 📈
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="val">180cm</span>
-        <span class="lbl">Height</span>
+    <div class="hero-content">
+      <p class="hero-label font-accent">meet fit with abhi</p>
+      <h1>YOUR POCKET<br>GUIDE TO<br><span class="text-gradient">FITNESS.</span></h1>
+      <p>Track hydration, calculate calories, scan food, explore exercises — all by <strong>Abhijit Das</strong>.</p>
+      <div class="hero-cta">
+        <a href="exercises.html" class="btn btn-primary">Explore Exercises</a>
+        <a href="calculator.html" class="btn btn-outline">Calculate TDEE</a>
       </div>
-      <div class="hero-stat">
-        <span class="val">81kg</span>
-        <span class="lbl">Current</span>
-      </div>
-      <div class="hero-stat">
-        <span class="val">21</span>
-        <span class="lbl">Age</span>
-      </div>
-      <div class="hero-stat">
-        <span class="val">~2700</span>
-        <span class="lbl">kcal/day</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="10" data-suffix="+">0+</div>
+          <div class="hero-stat-label">Free Tools</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="24">0</div>
+          <div class="hero-stat-label">Exercises</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="5" data-suffix="kg">0kg</div>
+          <div class="hero-stat-label">Lost in 2mo</div>
+        </div>
       </div>
     </div>
-    <div class="hero-cta">
-      <a href="#meals" class="btn-primary">🍽 View Meal Plan</a>
-      <a href="#training" class="btn-secondary">🏋 Training Split</a>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">TRAIN HARD</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item accent">EAT CLEAN</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item">STAY HYDRATED</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item accent">TRANSFORM</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item">AB HI FIT</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item">TRAIN HARD</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item accent">EAT CLEAN</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item">STAY HYDRATED</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item accent">TRANSFORM</span>
+      <div class="marquee-dot"></div>
+      <span class="marquee-item">AB HI FIT</span>
+      <div class="marquee-dot"></div>
     </div>
   </div>
-</section>
 
-<!-- ACHIEVEMENT BANNER -->
-<div class="achievement-banner reveal">
-  <div class="achievement-icon">🏆</div>
-  <div class="achievement-text">
-    <h3>Recent Goal Achieved</h3>
-    <p>Dropped from 86kg to 81kg in just 2 months — 5kg of pure progress through discipline and consistency.</p>
-  </div>
-  <div class="achievement-badge">–5 KG ✓</div>
-</div>
+  <!-- ===== FEATURES BENTO GRID ===== -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label font-accent reveal">What you get</p>
+      <h2 class="section-title reveal reveal-delay-1">ALL YOUR<br>FITNESS TOOLS</h2>
+      <p class="section-subtitle reveal reveal-delay-2">Everything you need for your fitness journey, completely free.</p>
 
-<!-- MEAL PLAN -->
-<section id="meals">
-  <div class="section-label">Nutrition</div>
-  <h2 class="section-title">MEAL <span>PLAN</span></h2>
-
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('non-veg', this)">🍗 Non-Veg Plan</button>
-    <button class="tab-btn" onclick="switchTab('veg', this)">🌱 Vegetarian Plan</button>
-  </div>
-
-  <!-- NON-VEG -->
-  <div class="tab-pane active" id="tab-non-veg">
-    <div class="meals-grid">
-      <div class="card meal-card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m1">🥣</div>
-          <div>
-            <div class="meal-title">Meal 1 – Breakfast</div>
-            <div class="meal-subtitle">Start strong 💪</div>
+      <div class="bento-grid" style="margin-top: var(--space-2xl);">
+        <a href="hydration.html" class="bento-card reveal">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
           </div>
-        </div>
-        <ul class="meal-items">
-          <li>Oats – 60g</li>
-          <li>Low fat milk – 150ml</li>
-          <li>Whole Eggs – 4</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~620 kcal</span>
-          <span class="macro-chip mc-pro">P: 35g</span>
-          <span class="macro-chip mc-carb">C: 55g</span>
-          <span class="macro-chip mc-fat">F: 25g</span>
-        </div>
-      </div>
-      <div class="card meal-card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m2">🍚</div>
-          <div>
-            <div class="meal-title">Meal 2 – Lunch</div>
-            <div class="meal-subtitle">Main fuel 🔥</div>
-          </div>
-        </div>
-        <ul class="meal-items">
-          <li>Cooked Rice – 300g (2½ bowls)</li>
-          <li>Chicken 150g OR Fish 200g</li>
-          <li>Mixed Vegetables – 1 bowl</li>
-          <li>Ghee – 1 tsp (5g)</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~760 kcal</span>
-          <span class="macro-chip mc-pro">P: 40g</span>
-          <span class="macro-chip mc-carb">C: 85g</span>
-          <span class="macro-chip mc-fat">F: 10g</span>
-        </div>
-      </div>
-      <div class="card meal-card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m3">🍞</div>
-          <div>
-            <div class="meal-title">Meal 3 – Evening</div>
-            <div class="meal-subtitle">Pre-rest refuel 🌆</div>
-          </div>
-        </div>
-        <ul class="meal-items">
-          <li>Roti – 3 medium</li>
-          <li>Whole Eggs – 3</li>
-          <li>Curd – 100g</li>
-          <li>Ghee – 1 tsp</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~700 kcal</span>
-          <span class="macro-chip mc-pro">P: 32g</span>
-          <span class="macro-chip mc-carb">C: 65g</span>
-          <span class="macro-chip mc-fat">F: 20g</span>
-        </div>
-      </div>
-      <div class="card meal-card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m4">🍛</div>
-          <div>
-            <div class="meal-title">Meal 4 – Dinner</div>
-            <div class="meal-subtitle">Recovery fuel 🌙</div>
-          </div>
-        </div>
-        <ul class="meal-items">
-          <li>Cooked Rice – 250g (2 bowls)</li>
-          <li>Fish 200g OR Chicken 150g</li>
-          <li>Ghee – 1 tsp</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~700 kcal</span>
-          <span class="macro-chip mc-pro">P: 40g</span>
-          <span class="macro-chip mc-carb">C: 70g</span>
-          <span class="macro-chip mc-fat">F: 12g</span>
-        </div>
-      </div>
-    </div>
-    <div class="macros-total reveal">
-      <div style="flex-basis:180px">
-        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:4px">Daily Total</div>
-        <div style="font-size:2rem;font-family:'Bebas Neue',sans-serif;background:linear-gradient(90deg,var(--g1),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">2650–2750</div>
-        <div style="font-size:0.75rem;color:var(--muted)">Total Calories</div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g3)">Protein</span><span>150–155g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:58%;background:linear-gradient(90deg,var(--g3),#00f0b5)"></div></div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g2)">Carbs</span><span>275–300g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:82%;background:linear-gradient(90deg,var(--g2),#ffd86e)"></div></div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g4)">Fats</span><span>~70g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:27%;background:linear-gradient(90deg,var(--g4),#a08fff)"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- VEG -->
-  <div class="tab-pane" id="tab-veg">
-    <div class="vege-grid">
-      <div class="card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m1">🌾</div>
-          <div><div class="meal-title">Meal 1 – Breakfast</div></div>
-        </div>
-        <ul class="meal-items">
-          <li>Oats – 100g</li>
-          <li>Milk – 500ml</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~750 kcal</span>
-          <span class="macro-chip mc-pro">P: 32g</span>
-          <span class="macro-chip mc-carb">C: 95g</span>
-          <span class="macro-chip mc-fat">F: 20g</span>
-        </div>
-      </div>
-      <div class="card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m2">🫓</div>
-          <div><div class="meal-title">Meal 2 – Lunch</div></div>
-        </div>
-        <ul class="meal-items">
-          <li>Besan Chilla – 100g</li>
-          <li>Curd – 200g</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~650 kcal</span>
-          <span class="macro-chip mc-pro">P: 32g</span>
-          <span class="macro-chip mc-carb">C: 60g</span>
-          <span class="macro-chip mc-fat">F: 20g</span>
-        </div>
-      </div>
-      <div class="card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m3">🍌</div>
-          <div><div class="meal-title">Meal 3 – Pre-Workout</div></div>
-        </div>
-        <ul class="meal-items">
-          <li>Banana – 2 medium</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~210 kcal</span>
-          <span class="macro-chip mc-pro">P: 2g</span>
-          <span class="macro-chip mc-carb">C: 50g</span>
-          <span class="macro-chip mc-fat">F: 0g</span>
-        </div>
-      </div>
-      <div class="card reveal">
-        <div class="meal-header">
-          <div class="meal-icon m4">🧀</div>
-          <div><div class="meal-title">Meal 4 – Dinner</div></div>
-        </div>
-        <ul class="meal-items">
-          <li>Roti – 4</li>
-          <li>Paneer – 200g</li>
-          <li>Curd – 100g (optional)</li>
-        </ul>
-        <div class="macro-chips">
-          <span class="macro-chip mc-cal">~950 kcal</span>
-          <span class="macro-chip mc-pro">P: 55g</span>
-          <span class="macro-chip mc-carb">C: 85g</span>
-          <span class="macro-chip mc-fat">F: 40g</span>
-        </div>
-      </div>
-    </div>
-    <div class="macros-total reveal" style="margin-top:20px">
-      <div style="flex-basis:180px">
-        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:4px">Daily Total</div>
-        <div style="font-size:2rem;font-family:'Bebas Neue',sans-serif;background:linear-gradient(90deg,var(--g3),var(--g4));-webkit-background-clip:text;-webkit-text-fill-color:transparent">2500–2650</div>
-        <div style="font-size:0.75rem;color:var(--muted)">Total Calories</div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g3)">Protein</span><span>118–122g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:50%;background:linear-gradient(90deg,var(--g3),#00f0b5)"></div></div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g2)">Carbs</span><span>~290g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:78%;background:linear-gradient(90deg,var(--g2),#ffd86e)"></div></div>
-      </div>
-      <div class="macro-bar">
-        <div class="macro-bar-label"><span style="color:var(--g4)">Fats</span><span>~80g</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:31%;background:linear-gradient(90deg,var(--g4),#a08fff)"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TRAINING -->
-<section id="training" style="background:var(--bg2)">
-  <div class="section-label">Workout Split</div>
-  <h2 class="section-title">5-DAY <span>TRAINING</span></h2>
-  <div class="training-grid">
-    <!-- Day 1 -->
-    <div class="card reveal">
-      <div class="day-number">01</div>
-      <div class="day-label">Push + Pull Day A</div>
-      <ul class="exercise-list">
-        <li><span class="ex-name">Incline DB / Smith Press</span><span class="ex-sets">3×8-12</span></li>
-        <li><span class="ex-name">Bar Dips</span><span class="ex-sets">3×10</span></li>
-        <li><span class="ex-name">Cable Fly Lower ⚡</span><span class="ex-sets">3×10</span></li>
-        <li><span class="ex-name">Lat Pull Down</span><span class="ex-sets">3×12-15</span></li>
-        <li><span class="ex-name">Incline Chest Supported Row</span><span class="ex-sets">3×12-15</span></li>
-        <li><span class="ex-name">Straight Arm Pull Down</span><span class="ex-sets">2×10</span></li>
-      </ul>
-    </div>
-    <!-- Day 2 -->
-    <div class="card reveal">
-      <div class="day-number">02</div>
-      <div class="day-label">Shoulders + Arms</div>
-      <ul class="exercise-list">
-        <li><span class="ex-name">Shoulder DB / Smith Press</span><span class="ex-sets">3×6-10</span></li>
-        <li><span class="ex-name">Cable Side Raise</span><span class="ex-sets">3×15</span></li>
-        <li><span class="ex-name">Rear Pec Fly</span><span class="ex-sets">4×10</span></li>
-        <li><span class="ex-name">Incline Bicep Curl</span><span class="ex-sets">3×10</span></li>
-        <li><span class="ex-name">Tricep Overhead Ext.</span><span class="ex-sets">3×10</span></li>
-        <li><span class="ex-name">DB Preacher Curl</span><span class="ex-sets">2×15</span></li>
-        <li><span class="ex-name">Tricep Push Down</span><span class="ex-sets">2×15</span></li>
-      </ul>
-    </div>
-    <!-- Day 3 -->
-    <div class="card reveal">
-      <div class="day-number">03</div>
-      <div class="day-label">Leg Day 🦵</div>
-      <ul class="exercise-list">
-        <li><span class="ex-name">Barbell Squats</span><span class="ex-sets">3×8-10</span></li>
-        <li><span class="ex-name">Back Down</span><span class="ex-sets">2×15</span></li>
-        <li><span class="ex-name">RDL</span><span class="ex-sets">3×10</span></li>
-        <li><span class="ex-name">Leg Extension</span><span class="ex-sets">3×20</span></li>
-        <li><span class="ex-name">Leg Curl</span><span class="ex-sets">3×15-20</span></li>
-        <li><span class="ex-name">Weighted Calf Raise</span><span class="ex-sets">3×15-20</span></li>
-      </ul>
-    </div>
-    <!-- Day 4 -->
-    <div class="card reveal" style="background:linear-gradient(135deg,var(--card),rgba(255,107,53,0.04))">
-      <div class="day-number">04</div>
-      <div class="day-label">Repeat Day 1</div>
-      <ul class="exercise-list">
-        <li><span class="ex-name">Same as Day 1</span></li>
-        <li><span class="ex-name">Push + Pull Exercises</span></li>
-        <li><span class="ex-name">Progressive overload focus</span></li>
-        <li><span class="ex-name">Track weights from Day 1</span></li>
-      </ul>
-      <span class="repeat-tag">↩ Day 1 Repeat</span>
-    </div>
-    <!-- Day 5 -->
-    <div class="card reveal" style="background:linear-gradient(135deg,var(--card),rgba(123,97,255,0.04))">
-      <div class="day-number">05</div>
-      <div class="day-label">Repeat Day 2</div>
-      <ul class="exercise-list">
-        <li><span class="ex-name">Same as Day 2</span></li>
-        <li><span class="ex-name">Shoulder + Arms Focus</span></li>
-        <li><span class="ex-name">Drop sets if energy allows</span></li>
-        <li><span class="ex-name">Track weights from Day 2</span></li>
-      </ul>
-      <span class="repeat-tag" style="background:rgba(123,97,255,0.1);border-color:rgba(123,97,255,0.2);color:var(--g4)">↩ Day 2 Repeat</span>
-    </div>
-  </div>
-</section>
-
-<!-- ABS CIRCUIT -->
-<section id="abs">
-  <div class="section-label">Core Work</div>
-  <h2 class="section-title">ABS <span>CIRCUIT</span></h2>
-  <p style="color:var(--muted);margin-bottom:32px;font-size:0.9rem">Perform every alternative day at the end of workout 🦍</p>
-  <div class="abs-grid">
-    <div class="abs-card reveal">
-      <div class="abs-num">01</div>
-      <div>
-        <div class="abs-name">Lying Leg Raise</div>
-        <div class="abs-detail">Hands under hips, lift legs slowly, 3 sec down — lower abs focus</div>
-        <div class="abs-sets">3–4 × 15 reps</div>
-      </div>
-    </div>
-    <div class="abs-card reveal">
-      <div class="abs-num">02</div>
-      <div>
-        <div class="abs-name">Reverse Crunch</div>
-        <div class="abs-detail">Bring knees toward chest, lift hips slightly — lower abs isolation</div>
-        <div class="abs-sets">3–4 × 15 reps</div>
-      </div>
-    </div>
-    <div class="abs-card reveal">
-      <div class="abs-num">03</div>
-      <div>
-        <div class="abs-name">Lying Toe Touch</div>
-        <div class="abs-detail">Legs straight up, reach toward toes, squeeze upper abs hard</div>
-        <div class="abs-sets">3–4 × 20 reps</div>
-      </div>
-    </div>
-    <div class="abs-card reveal">
-      <div class="abs-num">04</div>
-      <div>
-        <div class="abs-name">Dead Bug</div>
-        <div class="abs-detail">Opposite arm + leg extend, lower back pressed to floor throughout</div>
-        <div class="abs-sets">3–4 × 12 reps/side</div>
-      </div>
-    </div>
-    <div class="abs-card reveal">
-      <div class="abs-num">05</div>
-      <div>
-        <div class="abs-name">Flutter Kicks</div>
-        <div class="abs-detail">Small controlled kicks, keep core braced and tight throughout</div>
-        <div class="abs-sets">3–4 × 30 seconds</div>
-      </div>
-    </div>
-    <div class="plank-card reveal" style="flex-direction:column;gap:12px">
-      <div style="display:flex;align-items:center;gap:14px">
-        <div class="plank-fire">🔥</div>
-        <div>
-          <h4>Finisher: Plank Hold</h4>
-          <p>3 rounds of 30–45 sec hold. No compromising form for time.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SUPPLEMENTS + LIFESTYLE -->
-<section id="lifestyle" style="background:var(--bg2)">
-  <div class="section-label">Lifestyle Stack</div>
-  <h2 class="section-title">SUPPS & <span>CARE</span></h2>
-
-  <!-- SUPPLEMENT -->
-  <div style="margin-bottom:40px">
-    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:16px;color:var(--g2)">💊 Supplement</h3>
-    <div class="supp-card reveal">
-      <div class="supp-icon">⚡</div>
-      <div>
-        <div class="supp-name">CREATINE MONOHYDRATE</div>
-        <div class="supp-dose">5g daily · Any time with water</div>
-        <div class="supp-desc">The most researched supplement in sports science. Increases strength output, muscle volume via cell volumization, and accelerates recovery. Take every day consistently — no loading phase needed. Works cumulatively so missing days reduces effectiveness.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FACE ROUTINE -->
-  <div style="margin-bottom:40px">
-    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:16px;color:var(--g1)">☀️ Face Routine – 5 Min Daily</h3>
-    <div class="skin-grid">
-      <div class="card reveal">
-        <div class="skin-time">🌅 Morning</div>
-        <ul class="skin-steps">
-          <li>
-            <div class="skin-step-icon">🧼</div>
-            <div><strong>Cleanser</strong><br><span style="color:var(--muted);font-size:0.8rem">Himalaya Purifying Neem or Cetaphil</span></div>
-          </li>
-          <li>
-            <div class="skin-step-icon">✨</div>
-            <div><strong>Vitamin C Serum</strong> <span style="color:var(--muted);font-size:0.78rem">(optional)</span><br><span style="color:var(--muted);font-size:0.8rem">Minimalist 10% or Dot & Key</span></div>
-          </li>
-          <li>
-            <div class="skin-step-icon">☀️</div>
-            <div><strong>Sunscreen SPF 50+</strong><br><span style="color:var(--muted);font-size:0.8rem">Lakme Sun Expert or Minimalist SPF 60</span></div>
-          </li>
-        </ul>
-      </div>
-      <div class="card reveal">
-        <div class="skin-time">🌙 Night</div>
-        <ul class="skin-steps">
-          <li>
-            <div class="skin-step-icon">🧼</div>
-            <div><strong>Cleanser</strong><br><span style="color:var(--muted);font-size:0.8rem">Wash off the day's grime</span></div>
-          </li>
-          <li>
-            <div class="skin-step-icon">💧</div>
-            <div><strong>Moisturizer</strong><br><span style="color:var(--muted);font-size:0.8rem">Cetaphil or Minimalist 10% Niacinamide</span></div>
-          </li>
-        </ul>
-        <div style="margin-top:16px;padding:12px;background:rgba(255,107,53,0.06);border-radius:8px">
-          <p style="font-size:0.78rem;color:var(--muted)">💡 <strong style="color:var(--text)">Key Glow Foods:</strong> Eggs (biotin) · Fish omega-3 · Carrots · Papaya · Tomato (lycopene) · Amla/Lemon (Vit C) · Turmeric</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SKIN TIPS -->
-  <div>
-    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:16px;color:var(--g3)">💧 Skin Quality Rules</h3>
-    <div class="skin-water-grid">
-      <div class="water-tip reveal">
-        <div class="wt-icon">💧</div>
-        <div>
-          <h4>3.5L Water Daily</h4>
-          <p>Non-negotiable. Water is the #1 free skincare. Clears toxins, reduces dullness. Add lemon for Vitamin C.</p>
-        </div>
-      </div>
-      <div class="water-tip reveal">
-        <div class="wt-icon">😴</div>
-        <div>
-          <h4>8 Hours Sleep</h4>
-          <p>Skin repairs itself between 10 PM and 2 AM. Late nights cause dullness, dark circles, breakouts.</p>
-        </div>
-      </div>
-      <div class="water-tip reveal">
-        <div class="wt-icon">🙅</div>
-        <div>
-          <h4>Don't Touch Face</h4>
-          <p>Gym equipment → hands → face = pimples. Wash hands before touching. Change pillowcase weekly.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">Get In Touch</div>
-  <h2 class="section-title">HIT MY <span>DM</span></h2>
-  <div class="contact-grid">
-    <div class="contact-info reveal">
-      <h3>Let's Connect 🤝</h3>
-      <p>Got questions about the plan? Want to collab or just vibe? Slide into my Instagram DMs — I'm always down to talk fitness, aesthetics, and progress.</p>
-      <div class="contact-links">
-        <a href="https://www.instagram.com/abhiiijittt05/" target="_blank" class="contact-link">
-          <div class="cl-icon cl-ig" style="font-size:1.2rem;display:flex;align-items:center;justify-content:center;color:#fff">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </div>
-          <div>
-            <div style="font-weight:600;font-size:0.9rem">Instagram</div>
-            <div style="font-size:0.78rem;color:var(--muted)">@abhiiijittt05</div>
-          </div>
-          <div style="margin-left:auto;font-size:0.8rem;color:var(--muted)">↗</div>
+          <h4>Hydration Tracker</h4>
+          <p>Log water intake, see progress ring, weekly chart</p>
+          <!-- Mini Preview Visual -->
+          <svg viewBox="0 0 120 60" fill="none" style="margin-top:auto;">
+            <rect x="5" y="10" width="20" height="40" rx="4" fill="#93C5FD" stroke="#1A1A1A" stroke-width="2"/>
+            <rect x="5" y="25" width="20" height="25" rx="4" fill="#3B82F6" stroke="#1A1A1A" stroke-width="2"/>
+            <circle cx="75" cy="30" r="22" fill="none" stroke="#E0E0E0" stroke-width="5"/>
+            <circle cx="75" cy="30" r="22" fill="none" stroke="#3B82F6" stroke-width="5" stroke-dasharray="90 138" stroke-linecap="round" transform="rotate(-90 75 30)"/>
+            <text x="75" y="34" text-anchor="middle" font-size="10" font-weight="800" fill="#1A1A1A">65%</text>
+          </svg>
         </a>
-        <a href="https://www.instagram.com/abhiiijittt05/" target="_blank" class="contact-link">
-          <div class="cl-icon cl-dm" style="display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem">💬</div>
-          <div>
-            <div style="font-weight:600;font-size:0.9rem">Send DM on Instagram</div>
-            <div style="font-size:0.78rem;color:var(--muted)">Tap to message directly</div>
+
+        <a href="calculator.html" class="bento-card reveal reveal-delay-1">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
           </div>
-          <div style="margin-left:auto;font-size:0.8rem;color:var(--muted)">↗</div>
+          <h4>Calorie Calculator</h4>
+          <p>BMR, TDEE, BMI, macro split — all in one</p>
+          <svg viewBox="0 0 120 60" fill="none" style="margin-top:auto;">
+            <rect x="10" y="5" width="100" height="50" rx="10" fill="#FEF08A" stroke="#1A1A1A" stroke-width="2"/>
+            <text x="60" y="25" text-anchor="middle" font-size="8" font-weight="700" fill="#6B6B6B">TDEE</text>
+            <text x="60" y="42" text-anchor="middle" font-size="16" font-weight="900" fill="#1A1A1A">2,650</text>
+            <text x="60" y="52" text-anchor="middle" font-size="7" fill="#6B6B6B">kcal/day</text>
+          </svg>
+        </a>
+
+        <a href="exercises.html" class="bento-card reveal reveal-delay-2">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5h11M6 2L6 22M18 2l0 20M2 6h4M18 6h4M2 18h4M18 18h4"/></svg>
+          </div>
+          <h4>Exercise Library</h4>
+          <p>24 exercises with form guides, sets & tips</p>
+          <svg viewBox="0 0 120 60" fill="none" style="margin-top:auto;">
+            <rect x="5" y="5" width="50" height="20" rx="6" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="30" y="18" text-anchor="middle" font-size="7" font-weight="800" fill="#1A1A1A">CHEST</text>
+            <rect x="60" y="5" width="50" height="20" rx="6" fill="#A7F3D0" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="85" y="18" text-anchor="middle" font-size="7" font-weight="800" fill="#1A1A1A">BACK</text>
+            <rect x="5" y="32" width="50" height="20" rx="6" fill="#93C5FD" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="30" y="45" text-anchor="middle" font-size="7" font-weight="800" fill="#1A1A1A">LEGS</text>
+            <rect x="60" y="32" width="50" height="20" rx="6" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="85" y="45" text-anchor="middle" font-size="7" font-weight="800" fill="#1A1A1A">ARMS</text>
+          </svg>
+        </a>
+
+        <a href="body-map.html" class="bento-card reveal reveal-delay-3">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v8"/><path d="M8 12h8"/><path d="M9 20l3-4 3 4"/></svg>
+          </div>
+          <h4>Body Map</h4>
+          <p>Tap any muscle to find exercises</p>
+          <svg viewBox="0 0 80 80" fill="none" style="margin-top:auto; max-width:80px; margin: auto;">
+            <circle cx="40" cy="14" r="8" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="1.5"/>
+            <rect x="32" y="22" width="16" height="22" rx="6" fill="#93C5FD" stroke="#1A1A1A" stroke-width="1.5"/>
+            <line x1="32" y1="28" x2="18" y2="22" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+            <line x1="48" y1="28" x2="62" y2="22" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+            <line x1="36" y1="44" x2="30" y2="68" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+            <line x1="44" y1="44" x2="50" y2="68" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="28" cy="30" r="6" fill="#AAFF00" opacity="0.5" stroke="#5BA85F" stroke-width="1"/>
+          </svg>
+        </a>
+
+        <a href="scanner.html" class="bento-card reveal reveal-delay-4">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+          </div>
+          <h4>AI Scanner</h4>
+          <p>Scan food & gym equipment with camera AI</p>
+          <svg viewBox="0 0 120 60" fill="none" style="margin-top:auto;">
+            <rect x="20" y="5" width="80" height="50" rx="8" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2"/>
+            <rect x="25" y="10" width="70" height="40" rx="5" fill="#2D2D2D"/>
+            <line x1="30" y1="30" x2="90" y2="30" stroke="#AAFF00" stroke-width="2" stroke-dasharray="4 3"/>
+            <rect x="28" y="13" width="10" height="10" fill="none" stroke="#AAFF00" stroke-width="1.5"/>
+            <rect x="82" y="13" width="10" height="10" fill="none" stroke="#AAFF00" stroke-width="1.5"/>
+            <rect x="28" y="37" width="10" height="10" fill="none" stroke="#AAFF00" stroke-width="1.5"/>
+            <rect x="82" y="37" width="10" height="10" fill="none" stroke="#AAFF00" stroke-width="1.5"/>
+          </svg>
+        </a>
+
+        <a href="height.html" class="bento-card reveal reveal-delay-5">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0z"/></svg>
+          </div>
+          <h4>Height Measure</h4>
+          <p>AI body pose detection to estimate height</p>
+          <svg viewBox="0 0 80 80" fill="none" style="margin-top:auto; max-width:80px; margin: auto;">
+            <rect x="60" y="5" width="6" height="70" rx="2" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5"/>
+            <line x1="58" y1="10" x2="66" y2="10" stroke="#1A1A1A" stroke-width="1"/>
+            <line x1="58" y1="25" x2="66" y2="25" stroke="#1A1A1A" stroke-width="1"/>
+            <line x1="58" y1="40" x2="66" y2="40" stroke="#1A1A1A" stroke-width="1"/>
+            <line x1="58" y1="55" x2="66" y2="55" stroke="#1A1A1A" stroke-width="1"/>
+            <circle cx="30" cy="14" r="6" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="1.5"/>
+            <line x1="30" y1="20" x2="30" y2="45" stroke="#1A1A1A" stroke-width="2.5"/>
+            <line x1="30" y1="28" x2="18" y2="22" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="28" x2="42" y2="22" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="45" x2="22" y2="65" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="45" x2="38" y2="65" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="10" y1="8" x2="50" y2="8" stroke="#AAFF00" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <text x="30" y="76" text-anchor="middle" font-size="8" font-weight="800" fill="#1A1A1A">180cm</text>
+          </svg>
+        </a>
+
+        <a href="equipments.html" class="bento-card bento-card-large reveal">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M12 7v10"/><path d="M7 3v4"/><path d="M17 3v4"/><path d="M7 17v4"/><path d="M17 17v4"/></svg>
+          </div>
+          <h4>Gym Equipment Guide</h4>
+          <p>Complete guide to every machine, accessory and gear you need — with visuals</p>
+          <svg viewBox="0 0 240 60" fill="none" style="margin-top:auto;">
+            <rect x="5" y="8" width="45" height="44" rx="8" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="27" y="34" text-anchor="middle" font-size="18">🏋️</text>
+            <text x="27" y="48" text-anchor="middle" font-size="5" font-weight="800" fill="#1A1A1A">BENCH</text>
+            <rect x="58" y="8" width="45" height="44" rx="8" fill="#93C5FD" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="80" y="34" text-anchor="middle" font-size="18">👟</text>
+            <text x="80" y="48" text-anchor="middle" font-size="5" font-weight="800" fill="#1A1A1A">SHOES</text>
+            <rect x="111" y="8" width="45" height="44" rx="8" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="133" y="34" text-anchor="middle" font-size="18">🧴</text>
+            <text x="133" y="48" text-anchor="middle" font-size="5" font-weight="800" fill="#1A1A1A">SUPPS</text>
+            <rect x="164" y="8" width="45" height="44" rx="8" fill="#A7F3D0" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="186" y="34" text-anchor="middle" font-size="18">🧤</text>
+            <text x="186" y="48" text-anchor="middle" font-size="5" font-weight="800" fill="#1A1A1A">GLOVES</text>
+          </svg>
+        </a>
+
+        <a href="meal-plan.html" class="bento-card reveal">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/></svg>
+          </div>
+          <h4>Meal Plans</h4>
+          <p>Abhi's exact meals — non-veg & vegetarian</p>
+          <svg viewBox="0 0 120 50" fill="none" style="margin-top:auto;">
+            <rect x="5" y="5" width="110" height="40" rx="8" fill="#A7F3D0" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="18" y="22" font-size="7" font-weight="700" fill="#1A1A1A">🍗 Protein</text>
+            <rect x="12" y="28" width="40" height="6" rx="3" fill="#5BA85F"/>
+            <text x="70" y="22" font-size="7" font-weight="700" fill="#1A1A1A">🍚 Carbs</text>
+            <rect x="65" y="28" width="45" height="6" rx="3" fill="#AAFF00"/>
+          </svg>
+        </a>
+
+        <a href="training.html" class="bento-card reveal reveal-delay-1">
+          <div class="bento-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h4>Training Routines</h4>
+          <p>5-day split, abs, skincare, supplements</p>
+          <svg viewBox="0 0 120 50" fill="none" style="margin-top:auto;">
+            <rect x="5" y="5" width="20" height="40" rx="4" fill="#F9A8D4" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="15" y="28" text-anchor="middle" font-size="6" font-weight="800" fill="#1A1A1A">M</text>
+            <rect x="28" y="10" width="20" height="35" rx="4" fill="#93C5FD" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="38" y="31" text-anchor="middle" font-size="6" font-weight="800" fill="#1A1A1A">T</text>
+            <rect x="51" y="8" width="20" height="37" rx="4" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="61" y="30" text-anchor="middle" font-size="6" font-weight="800" fill="#1A1A1A">W</text>
+            <rect x="74" y="12" width="20" height="33" rx="4" fill="#C4B5FD" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="84" y="32" text-anchor="middle" font-size="6" font-weight="800" fill="#1A1A1A">T</text>
+            <rect x="97" y="6" width="20" height="39" rx="4" fill="#A7F3D0" stroke="#1A1A1A" stroke-width="1.5"/>
+            <text x="107" y="29" text-anchor="middle" font-size="6" font-weight="800" fill="#1A1A1A">F</text>
+          </svg>
         </a>
       </div>
     </div>
+  </section>
 
-    <!-- DM FORM -->
-    <div class="reveal">
-      <div class="card">
-        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px">📩 Send a Message</h3>
-        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:20px">Fill this out and connect on Instagram to chat!</p>
-        <div class="dm-form" id="dmForm">
-          <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input class="form-input" id="f-name" type="text" placeholder="e.g. Rahul Sharma">
+  <!-- ===== ABOUT ABHI ===== -->
+  <section class="section-colored" style="background: var(--pastel-yellow);">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-avatar reveal">
+          <img src="images/founder.jpg" alt="Abhijit Das — Founder of Fit With Abhi">
+        </div>
+        <div>
+          <span class="about-tag reveal">🏋️ Founder</span>
+          <h2 class="reveal reveal-delay-1">MEET<br>ABHIJIT DAS</h2>
+          <p class="reveal reveal-delay-2">21 years old. 180cm. Currently 81kg — down from 86kg in just 2 months through clean eating and consistent training. Building aesthetics, one rep at a time.</p>
+          <div class="about-stats-grid reveal reveal-delay-3">
+            <div class="about-stat-chip">
+              <div class="chip-value">180cm</div>
+              <div class="chip-label">Height</div>
+            </div>
+            <div class="about-stat-chip">
+              <div class="chip-value">81kg</div>
+              <div class="chip-label">Weight</div>
+            </div>
+            <div class="about-stat-chip">
+              <div class="chip-value">21</div>
+              <div class="chip-label">Age</div>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Instagram Handle</label>
-            <input class="form-input" id="f-ig" type="text" placeholder="@yourhandle">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message</label>
-            <textarea class="form-textarea" id="f-msg" placeholder="Hey Abhijit! Loved your fitness plan..."></textarea>
-          </div>
-          <a href="https://www.instagram.com/abhiiijittt05/" target="_blank" class="form-submit" onclick="sendDM(event)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            DM on Instagram → @abhiiijittt05
-          </a>
-          <p class="form-note">Opens Instagram DM → <a href="https://www.instagram.com/abhiiijittt05/" target="_blank">@abhiiijittt05</a></p>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ===== TRANSFORMATION ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="transform-card reveal" style="background: var(--pastel-pink);">
+        <div class="transform-content">
+          <span class="badge badge-dark" style="margin-bottom: var(--space-md);">🏆 WEIGHT LOSS JOURNEY</span>
+          <div class="transform-numbers">
+            <span class="transform-num">86</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-num">81</span>
+          </div>
+          <p class="transform-label">KG LOST IN 2 MONTHS — WITH DISCIPLINE & CLEAN EATING</p>
+          <svg viewBox="0 0 240 60" fill="none" style="margin-top: var(--space-lg); max-width: 300px; margin-left: auto; margin-right: auto;">
+            <path d="M10 50 Q40 45 60 40 T120 25 T180 15 T230 10" stroke="#1A1A1A" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="10" cy="50" r="5" fill="#1A1A1A"/>
+            <circle cx="230" cy="10" r="5" fill="#AAFF00" stroke="#1A1A1A" stroke-width="2"/>
+            <text x="10" y="60" font-size="7" font-weight="800" fill="#1A1A1A">86kg</text>
+            <text x="218" y="8" font-size="7" font-weight="800" fill="#1A1A1A">81kg</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INSTAGRAM ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="instagram-section reveal">
+        <svg viewBox="0 0 80 80" fill="none" style="max-width: 60px; margin: 0 auto var(--space-md);">
+          <rect x="5" y="5" width="70" height="70" rx="18" fill="none" stroke="#1A1A1A" stroke-width="4"/>
+          <circle cx="40" cy="40" r="16" fill="none" stroke="#1A1A1A" stroke-width="4"/>
+          <circle cx="58" cy="22" r="4" fill="#1A1A1A"/>
+        </svg>
+        <h3>Follow the Journey</h3>
+        <p style="margin-bottom: var(--space-lg);">Daily updates, gym reels, transformation progress — all on Instagram.</p>
+        <a href="https://www.instagram.com/abhiiijittt05/" target="_blank" rel="noopener noreferrer" class="instagram-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @abhiiijittt05
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GYM EQUIPMENT SVG ILLUSTRATIONS ===== -->
+  <section class="section-colored" style="background: #1E1E2E;">
+    <div class="container">
+      <p class="section-label font-accent reveal" style="color: #AAFF00;">Essential equipment</p>
+      <h2 class="section-title reveal reveal-delay-1" style="color: #F5F5F0;">KNOW YOUR<br>MACHINES</h2>
+      <div class="equip-grid" style="margin-top: var(--space-2xl);">
+        <!-- Dumbbell -->
+        <div class="equip-card reveal" style="background: #2A2A3E;">
+          <svg viewBox="0 0 160 80" fill="none">
+            <rect x="15" y="20" width="20" height="40" rx="4" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="125" y="20" width="20" height="40" rx="4" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="35" y="30" width="90" height="20" rx="6" fill="#3A3A5A" stroke="#5BA85F" stroke-width="2"/>
+            <circle cx="80" cy="40" r="6" fill="#AAFF00" stroke="#1A1A1A" stroke-width="2"/>
+          </svg>
+          <span class="equip-card-label" style="color: #888;">DUMBBELL</span>
+        </div>
+
+        <!-- Adjustable Bench -->
+        <div class="equip-card reveal reveal-delay-1" style="background: #2A2A3E;">
+          <svg viewBox="0 0 160 80" fill="none">
+            <rect x="30" y="50" width="100" height="8" rx="3" fill="#3A3A5A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="40" y="18" width="60" height="32" rx="4" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2" transform="rotate(-15 70 34)"/>
+            <circle cx="95" cy="28" r="5" fill="#AAFF00" stroke="#1A1A1A" stroke-width="2"/>
+            <line x1="30" y1="58" x2="30" y2="72" stroke="#5BA85F" stroke-width="3" stroke-linecap="round"/>
+            <line x1="130" y1="58" x2="130" y2="72" stroke="#5BA85F" stroke-width="3" stroke-linecap="round"/>
+            <text x="80" y="76" text-anchor="middle" font-size="6" fill="#666">0°-85°</text>
+          </svg>
+          <span class="equip-card-label" style="color: #888;">ADJUSTABLE BENCH</span>
+        </div>
+
+        <!-- Cable Machine -->
+        <div class="equip-card reveal reveal-delay-2" style="background: #2A2A3E;">
+          <svg viewBox="0 0 160 80" fill="none">
+            <rect x="20" y="5" width="8" height="70" rx="2" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="132" y="5" width="8" height="70" rx="2" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <line x1="24" y1="10" x2="136" y2="10" stroke="#5BA85F" stroke-width="3"/>
+            <rect x="55" y="15" width="50" height="35" rx="3" fill="#3A3A5A" stroke="#5BA85F" stroke-width="1.5"/>
+            <rect x="60" y="18" width="40" height="5" rx="2" fill="#4A4A6A"/>
+            <rect x="60" y="26" width="40" height="5" rx="2" fill="#4A4A6A"/>
+            <rect x="60" y="34" width="40" height="5" rx="2" fill="#4A4A6A"/>
+            <rect x="60" y="42" width="40" height="5" rx="2" fill="#AAFF00" opacity="0.5"/>
+            <line x1="80" y1="50" x2="80" y2="72" stroke="#AAFF00" stroke-width="2" stroke-dasharray="3 2"/>
+            <rect x="70" y="68" width="20" height="6" rx="2" fill="#AAFF00" stroke="#1A1A1A" stroke-width="1.5"/>
+          </svg>
+          <span class="equip-card-label" style="color: #888;">CABLE MACHINE</span>
+        </div>
+
+        <!-- Leg Press -->
+        <div class="equip-card reveal reveal-delay-3" style="background: #2A2A3E;">
+          <svg viewBox="0 0 160 80" fill="none">
+            <rect x="10" y="55" width="140" height="8" rx="3" fill="#3A3A5A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="100" y="15" width="40" height="40" rx="5" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <rect x="20" y="30" width="80" height="15" rx="4" fill="#4A4A6A" stroke="#5BA85F" stroke-width="2"/>
+            <circle cx="30" cy="55" r="8" fill="#3A3A5A" stroke="#5BA85F" stroke-width="2"/>
+            <circle cx="130" cy="55" r="8" fill="#3A3A5A" stroke="#5BA85F" stroke-width="2"/>
+            <circle cx="120" cy="35" r="5" fill="#AAFF00" stroke="#1A1A1A" stroke-width="2"/>
+          </svg>
+          <span class="equip-card-label" style="color: #888;">LEG PRESS</span>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: var(--space-xl);">
+        <a href="equipments.html" class="btn btn-primary reveal">See All Equipment →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label font-accent reveal text-center">The numbers</p>
+      <h2 class="section-title text-center reveal reveal-delay-1">ABHI'S STATS</h2>
+      <div class="stats-row" style="margin-top: var(--space-2xl);">
+        <div class="stat-card reveal" style="background: var(--pastel-yellow);">
+          <div class="stat-number" data-count="2400">0</div>
+          <div class="stat-label">Calories/Day</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-1" style="background: var(--pastel-pink);">
+          <div class="stat-number" data-count="150" data-suffix="g">0g</div>
+          <div class="stat-label">Protein/Day</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-2" style="background: var(--pastel-blue);">
+          <div class="stat-number" data-count="3" data-suffix="L">0L</div>
+          <div class="stat-label">Water/Day</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-3" style="background: var(--pastel-mint);">
+          <div class="stat-number" data-count="5">0</div>
+          <div class="stat-label">Days/Week</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUICK ACCESS ===== -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label font-accent reveal">Quick access</p>
+      <h2 class="section-title reveal reveal-delay-1">JUMP RIGHT IN</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); margin-top: var(--space-2xl);">
+        <a href="hydration.html" class="card reveal" style="background: var(--pastel-blue);">
+          <h4>💧 Log Water</h4>
+          <p>Track your daily intake & see progress</p>
+        </a>
+        <a href="scanner.html" class="card reveal reveal-delay-1" style="background: var(--pastel-pink);">
+          <h4>📷 Scan Item</h4>
+          <p>Point camera at food or equipment</p>
+        </a>
+        <a href="height.html" class="card reveal reveal-delay-2" style="background: var(--pastel-peach);">
+          <h4>📏 Measure Height</h4>
+          <p>AI-powered body height detection</p>
+        </a>
+        <a href="body-map.html" class="card reveal reveal-delay-3" style="background: var(--pastel-lavender);">
+          <h4>🧍 Body Map</h4>
+          <p>Tap muscles to find exercises</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="transform-card reveal" style="background: var(--accent); border: 3px solid #1A1A1A; box-shadow: var(--shadow-lg);">
+        <div class="transform-content">
+          <p class="font-accent" style="font-size: 1.4rem; margin-bottom: var(--space-sm);">you're welcome!</p>
+          <h2>START YOUR<br>FITNESS JOURNEY</h2>
+          <p style="margin: var(--space-md) auto; max-width: 400px; color: rgba(0,0,0,0.7);">All tools are 100% free. No sign-up. No ads. Just fitness.</p>
+          <div class="hero-cta" style="margin-top: var(--space-lg);">
+            <a href="exercises.html" class="btn btn-secondary">Start Training</a>
+            <a href="contact.html" class="btn btn-outline">Say Hello</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCROLL BANNER ===== -->
+  <div class="scroll-banner">
+    <div class="scroll-banner-track">
+      <span class="scroll-banner-item"><span class="dot"></span> ABHIFIT.ONLINE</span>
+      <span class="scroll-banner-item"><span class="dot"></span> FREE TOOLS</span>
+      <span class="scroll-banner-item"><span class="dot"></span> EAT CLEAN</span>
+      <span class="scroll-banner-item"><span class="dot"></span> TRAIN HARD</span>
+      <span class="scroll-banner-item"><span class="dot"></span> STAY HYDRATED</span>
+      <span class="scroll-banner-item"><span class="dot"></span> ABHIFIT.ONLINE</span>
+      <span class="scroll-banner-item"><span class="dot"></span> FREE TOOLS</span>
+      <span class="scroll-banner-item"><span class="dot"></span> EAT CLEAN</span>
+      <span class="scroll-banner-item"><span class="dot"></span> TRAIN HARD</span>
+      <span class="scroll-banner-item"><span class="dot"></span> STAY HYDRATED</span>
+    </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">ABHIJIT DAS</div>
-  <div class="footer-text">
-    All rights reserved – Abhijit Das | made with love ❤️
-  </div>
-  <div class="footer-ig">
-    <a href="https://www.instagram.com/abhiiijittt05/" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      @abhiiijittt05
-    </a>
-  </div>
-</footer>
-
-<!-- TOAST -->
-<div class="toast" id="toast">✅ Redirecting to Instagram DM!</div>
-
-
-
-<script>
-  // THEME TOGGLE
-  const toggle = document.getElementById('themeToggle');
-  toggle.addEventListener('click', () => {
-    const html = document.documentElement;
-    html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-  });
-
-  // MOBILE NAV
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-  function closeNav() {
-    document.getElementById('navLinks').classList.remove('open');
-  }
-
-  // TABS
-  function switchTab(id, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + id).classList.add('active');
-  }
-
-  // SCROLL REVEAL
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 60);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => obs.observe(r));
-
-  // DM SEND
-  function sendDM(e) {
-    const msg = document.getElementById('f-msg').value;
-    if (!msg.trim()) {
-      if (e) e.preventDefault();
-      alert('Please write a message first!');
-      return;
-    }
-    const toast = document.getElementById('toast');
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 3000);
-  }
-
-  // MACRO BAR ANIMATION ON SCROLL
-  const barObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('.bar-fill').forEach(b => {
-          const w = b.style.width;
-          b.style.width = '0%';
-          requestAnimationFrame(() => {
-            setTimeout(() => { b.style.width = w; }, 100);
-          });
-        });
-        barObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  document.querySelectorAll('.macros-total').forEach(m => barObs.observe(m));
-</script>
+  <footer class="footer" id="siteFooter"></footer>
+  <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FIT WITH ABHI — Your Personal Fitness Companion</title>
+  <meta name="description" content="Fit With Abhi — Your pocket guide to fitness, nutrition, and transformation. Free tools by Abhijit Das.">
+  <meta name="theme-color" content="#8EC98F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== BOTTOM NAVIGATION ===== -->
+  <nav class="nav-bottom" id="navBottom"></nav>
+
+  <!-- ===== MORE MENU OVERLAY ===== -->
+  <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="app-container"></main>
+
+  <!-- ===== CHATBOT FAB ===== -->
+  <a href="https://diet-plan-db50b1.zapier.app/chat" target="_blank" class="chat-fab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </a>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== ADMIN LOGIN MODAL ===== -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="document.getElementById('adminLoginModal').classList.remove('active')">&times;</button>
+      <h3 style="margin-bottom:var(--space-lg);">ADMIN LOGIN</h3>
+      <form id="adminLoginForm">
+        <div class="input-group">
+          <label class="input-label">Admin ID</label>
+          <input type="text" id="adminIdInput" required>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input type="password" id="adminPassInput" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">LOGIN</button>
+        <p id="adminError" style="color:#e53e3e;font-weight:700;margin-top:var(--space-md);display:none;">Invalid credentials</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN DASHBOARD MODAL ===== -->
+  <div class="modal-overlay" id="adminDashModal">
+    <div class="modal-content admin-dashboard">
+      <button class="close-modal" onclick="document.getElementById('adminDashModal').classList.remove('active')">&times;</button>
+      <h3 style="margin-bottom:var(--space-sm);">CONTENT MANAGER</h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-lg);">Edit any text on the site. Changes save to localStorage instantly.</p>
+      <div id="adminFieldsContainer"></div>
+      <div style="display:flex;gap:var(--space-md);margin-top:var(--space-lg);">
+        <button class="btn btn-primary" style="flex:1;" onclick="window.saveAdminChanges()">SAVE CHANGES</button>
+        <button class="btn btn-outline" onclick="window.resetContent()">RESET</button>
+        <button class="btn btn-outline" onclick="sessionStorage.removeItem('admin_auth');document.getElementById('adminDashModal').classList.remove('active');">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS (order matters) ===== -->
+  <script src="js/data.js"></script>
+
+  <!-- Components -->
+  <script src="js/components/home.js"></script>
+  <script src="js/components/diet.js"></script>
+  <script src="js/components/training.js"></script>
+  <script src="js/components/exercises.js"></script>
+  <script src="js/components/bodymap.js"></script>
+  <script src="js/components/equipments.js"></script>
+  <script src="js/components/hydration.js"></script>
+  <script src="js/components/calculator.js"></script>
+  <script src="js/components/skincare.js"></script>
+  <script src="js/components/about.js"></script>
+  <script src="js/components/admin.js"></script>
+
+  <!-- Main App -->
+  <script src="app.js"></script>
+</body>
+</html>
